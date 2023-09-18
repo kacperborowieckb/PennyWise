@@ -6,7 +6,7 @@ const RequireAuth = () => {
   const token = useAppSelector(selectCurrentToken);
   const location = useLocation();
 
-  return token ? <Outlet /> : <Navigate to={'/signin'} state={{ from: location }} replace />;
+  return token ? <Outlet /> : <Navigate to={'/welcome'} state={{ from: location }} replace />;
 };
 
 export default RequireAuth;

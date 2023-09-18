@@ -15,11 +15,11 @@ function App() {
       <CssBaseline enableColorScheme />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<WelcomePage />} />
+          <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route element={<RequireAuth />}>
-            <Route index element={<MainPage />} />
+            <Route path="/" element={<MainPage />} />
           </Route>
           <Route path="*" element={<Missing />} />
         </Route>

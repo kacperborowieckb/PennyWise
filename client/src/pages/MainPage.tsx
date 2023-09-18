@@ -3,15 +3,17 @@ import reactLogo from '/react.svg';
 import viteLogo from '/vite.svg';
 import Stack from '@mui/material/Stack';
 import { useLoginMutation } from '../features/auth/authApiSlice';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { setCredentials } from '../features/auth/authSlice';
 
 const MainPage = () => {
   const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
 
   const handleLogin = async (): Promise<void> => {
     try {
       const userData = await login({ username: 'username', password: 'haslo123' }).unwrap();
-      console.log('------------------');
-      console.log(userData);
+      dispatch(setCredentials(userData));
     } catch (err) {
       console.log(err);
       throw new Error('error');
