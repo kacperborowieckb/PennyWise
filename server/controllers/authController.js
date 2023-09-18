@@ -4,15 +4,15 @@ const jwt = require('jsonwebtoken');
 
 const handleLogin = async (req, res) => {
   const cookies = req.cookies;
-  console.log(req.body.user, req.body.pwd);
-  const { user, pwd } = req.body;
-  if (!user || !pwd)
+  console.log(req.body.username, req.body.password);
+  const { username, password } = req.body;
+  if (!username || !password)
     return res.status(400).json({ message: 'Username and password are required.' });
 
-  const foundUser = await User.findOne({ username: user }).exec();
+  const foundUser = await User.findOne({ username }).exec();
   if (!foundUser) return res.sendStatus(401); //Unauthorized
   // evaluate password
-  const match = await bcrypt.compare(pwd, foundUser.password);
+  const match = await bcrypt.compare(password, foundUser.password);
   if (match) {
     const roles = Object.values(foundUser.roles).filter(Boolean);
     // create JWTs
@@ -70,7 +70,7 @@ const handleLogin = async (req, res) => {
     });
 
     // Send authorization roles and access token to user
-    res.json({ accessToken });
+    res.json({ accessToken, username, _id: foundUser._id });
   } else {
     res.sendStatus(401);
   }

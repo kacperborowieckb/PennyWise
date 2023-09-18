@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import counterSlice from '../features/counter/counterSlice';
 import { api } from '../features/api/apiSlice';
+import authSlice from '../features/auth/authSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterSlice,
+    auth: authSlice,
     [api.reducerPath]: api.reducer,
   },
   devTools: process.env.NODE_ENV !== 'production',

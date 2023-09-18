@@ -3,7 +3,6 @@ import { CssBaseline, Experimental_CssVarsProvider as CssVarsProvider } from '@m
 import { Routes, Route } from 'react-router';
 import Layout from './components/layout/Layout';
 import MainPage from './pages/MainPage';
-import JokePage from './pages/JokePage';
 
 function App() {
   return (
@@ -13,7 +12,6 @@ function App() {
         <Route>
           <Route path="/" element={<Layout />}>
             <Route index element={<MainPage />} />
-            <Route path="joke" element={<JokePage />} />
           </Route>
         </Route>
       </Routes>
