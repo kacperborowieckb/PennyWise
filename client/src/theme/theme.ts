@@ -3,6 +3,31 @@ import { LinkProps } from '@mui/material/Link';
 import { LinkBehavior } from '../utils/LinkBehavior';
 
 export const theme = extendTheme({
+  colorSchemes: {
+    light: {
+      palette: {
+        primary: {
+          main: '#FD4A21',
+        },
+        secondary: {
+          main: '#173FF3',
+        },
+        background: {
+          default: '#EEEEF4',
+        },
+      },
+    },
+    dark: {
+      palette: {
+        primary: {
+          main: '#FD4A21',
+        },
+        secondary: {
+          main: '#173FF3',
+        },
+      },
+    },
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: `
