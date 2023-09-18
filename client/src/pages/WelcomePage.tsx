@@ -5,7 +5,7 @@ const WelcomePage = () => {
   return (
     <Stack
       sx={{
-        maxWidth: 500,
+        maxWidth: 520,
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',

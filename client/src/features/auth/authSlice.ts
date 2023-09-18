@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
-type AuthSliceInitialState = {
+export type AuthSliceInitialState = {
   username: string;
   accessToken: string;
   _id: string;
