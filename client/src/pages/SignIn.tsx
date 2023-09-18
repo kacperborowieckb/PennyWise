@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Snackbar, Stack, TextField } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Snackbar, Stack, TextField } from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import signInPageImg from '../assets/signin-page-img.svg';
 import { useLoginMutation } from '../features/auth/authApiSlice';
@@ -96,8 +96,8 @@ const SignIn = () => {
           value={password}
           onChange={handlePasswordChange}
         />
-        <Button variant="contained" type="submit">
-          Sign in
+        <Button variant="contained" type="submit" sx={{ height: '36px' }}>
+          {isLoading ? <CircularProgress color="inherit" size={24} /> : 'Sign in'}
         </Button>
       </Stack>
     </Box>
