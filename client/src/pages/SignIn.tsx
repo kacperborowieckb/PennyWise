@@ -66,8 +66,6 @@ const SignIn = () => {
     }
   };
 
-  console.log(errors);
-
   const clearError = () => setError('');
 
   return (
