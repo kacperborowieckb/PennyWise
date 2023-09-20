@@ -25,6 +25,9 @@ export const theme = extendTheme({
         secondary: {
           main: '#173FF3',
         },
+        background: {
+          default: '#111111',
+        },
       },
     },
   },

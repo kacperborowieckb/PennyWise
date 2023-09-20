@@ -1,4 +1,14 @@
-import { Alert, Box, Button, CircularProgress, Snackbar, Stack, TextField } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Link,
+  Snackbar,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import signInPageImg from '../assets/signin-page-img.svg';
 import { useLoginMutation } from '../features/auth/authApiSlice';
@@ -62,10 +72,9 @@ const SignIn = () => {
         onSubmit={handleSubmit}
         sx={{
           p: 3,
-          maxWidth: 300,
+          maxWidth: 320,
           gap: 2,
           border: '1px solid',
-          position: 'relative',
           borderColor: (theme) => theme.palette.primary.main,
           borderRadius: 2,
         }}
@@ -83,6 +92,14 @@ const SignIn = () => {
           </Snackbar>
         )}
         <img src={signInPageImg} alt="sign in illustration" style={{ height: 100 }} />
+        <Typography
+          sx={{ color: (theme) => theme.palette.primary.main }}
+          component={'h2'}
+          variant="h6"
+          align="center"
+        >
+          Sign in
+        </Typography>
         <TextField
           variant="outlined"
           label="Username"
@@ -99,6 +116,12 @@ const SignIn = () => {
         <Button variant="contained" type="submit" sx={{ height: '36px' }}>
           {isLoading ? <CircularProgress color="inherit" size={24} /> : 'Sign in'}
         </Button>
+        <Typography component={'p'} variant="body1">
+          Don't have an account yet?{' '}
+          <Link href={'/signup'} sx={{ fontStyle: 'italic' }}>
+            Sign up
+          </Link>
+        </Typography>
       </Stack>
     </Box>
   );

@@ -7,6 +7,13 @@ type Credentials = {
 
 const authApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
+    register: builder.mutation<unknown, Credentials>({
+      query: (credentials) => ({
+        url: '/register',
+        method: 'POST',
+        body: { ...credentials },
+      }),
+    }),
     login: builder.mutation<unknown, Credentials>({
       query: (credentials) => ({
         url: '/auth',
@@ -17,4 +24,4 @@ const authApiSlice = api.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation } = authApiSlice;
+export const { useRegisterMutation, useLoginMutation } = authApiSlice;

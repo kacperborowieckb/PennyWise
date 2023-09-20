@@ -5,7 +5,7 @@ const WelcomePage = () => {
   return (
     <Stack
       sx={{
-        maxWidth: 520,
+        maxWidth: 550,
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
@@ -27,7 +27,7 @@ const WelcomePage = () => {
           WebkitTextFillColor: 'transparent',
         }}
       >
-        Welcome to PenyWise!
+        Welcome to PennyWise!
       </Typography>
       <img src={welcomePageImg} alt="welcome page image finance app" style={{ height: 150 }} />
       <Typography variant="subtitle1" component={'p'}>
