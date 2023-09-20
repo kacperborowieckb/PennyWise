@@ -9,41 +9,52 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import signUpPageImg from '../assets/signup-page-img.svg';
 import { useRegisterMutation } from '../features/auth/authApiSlice';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type Error = {
   status: number;
   data: unknown;
 };
 
+const signUpSchema = z
+  .object({
+    username: z
+      .string()
+      .min(3, 'Username must be at least 3 characters')
+      .max(16, 'Username must be below 16 characters'),
+    password: z.string().min(6, 'Username must be at least 6 characters'),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords must match',
+    path: ['confirmPassword'],
+  });
+
+type TSignUpSchema = z.infer<typeof signUpSchema>;
+
 const SignUp = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
   const [error, setError] = useState<string | null>(null);
-  const [register, { isLoading }] = useRegisterMutation();
+  const [registerNewUser, { isLoading }] = useRegisterMutation();
   const navigate = useNavigate();
 
-  const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setConfirmPassword(e.target.value);
-
-  const clearInputs = () => {
-    setUsername('');
-    setPassword('');
-  };
   const clearError = () => setError(null);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async ({ username, password }: TSignUpSchema) => {
     try {
-      await register({ username, password }).unwrap();
-      clearInputs();
+      await registerNewUser({ username, password }).unwrap();
+      reset();
       navigate('/signin');
     } catch (err) {
       const knownError = err as Error;
@@ -64,10 +75,10 @@ const SignUp = () => {
       <Stack
         component={'form'}
         autoComplete="off"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
           p: 3,
-          maxWidth: 320,
+          width: 320,
           gap: 2,
           border: '1px solid',
           borderColor: (theme) => theme.palette.primary.main,
@@ -98,29 +109,32 @@ const SignUp = () => {
         <TextField
           variant="outlined"
           label="Username"
-          value={username}
-          onChange={handleUsernameChange}
+          {...register('username')}
+          error={!!errors.username}
+          helperText={errors.username?.message?.toString()}
         />
         <TextField
           variant="outlined"
           label="Password"
           type="password"
-          value={password}
-          onChange={handlePasswordChange}
+          {...register('password')}
+          error={!!errors.password}
+          helperText={errors.password?.message?.toString()}
         />
         <TextField
           variant="outlined"
           label="Confirm password"
           type="password"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
+          {...register('confirmPassword')}
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword?.message?.toString()}
         />
         <Button variant="contained" type="submit" sx={{ height: '36px' }}>
           {isLoading ? <CircularProgress color="inherit" size={24} /> : 'Sign up'}
         </Button>
         <Typography component={'p'} variant="body1">
           Already have an account?
-          <Link href={'/signup'} sx={{ fontStyle: 'italic' }}>
+          <Link href={'/signin'} sx={{ fontStyle: 'italic' }}>
             Sign in
           </Link>
         </Typography>

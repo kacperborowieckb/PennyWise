@@ -41,7 +41,7 @@ const SignIn = () => {
     reset,
     formState: { errors },
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
-  const [error, setError] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
