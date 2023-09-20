@@ -1,17 +1,17 @@
-import { Outlet, useNavigate } from 'react-router';
+import { Outlet } from 'react-router';
 import { useRefreshMutation } from '../../features/auth/authApiSlice';
 import { usePersist } from '../../hooks/usePersist';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentToken } from '../../features/auth/authSlice';
 import { useEffect, useRef, useState } from 'react';
 import { CircularProgress } from '@mui/material';
+import SignInAgain from '../sign-in-again/SignInAgain';
 
 const PersistLogin = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const [persist] = usePersist();
   const effectRan = useRef<boolean>(false);
   const token = useAppSelector(selectCurrentToken);
-  const navigate = useNavigate();
 
   const [refresh, { isLoading, isError, isSuccess, isUninitialized }] = useRefreshMutation();
 
@@ -42,7 +42,7 @@ const PersistLogin = () => {
       />
     );
   } else if (isError) {
-    navigate('signin');
+    return <SignInAgain />;
   }
 
   return null;

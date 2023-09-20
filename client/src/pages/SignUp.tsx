@@ -134,7 +134,7 @@ const SignUp = () => {
         </Button>
         <Typography component={'p'} variant="body1">
           Already have an account?
-          <Link href={'/signin'} sx={{ fontStyle: 'italic' }}>
+          <Link href={'/signin'} sx={{ fontStyle: 'italic', pl: 1 }}>
             Sign in
           </Link>
         </Typography>
