@@ -9,42 +9,48 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useState } from 'react';
 import signInPageImg from '../assets/signin-page-img.svg';
 import { useLoginMutation } from '../features/auth/authApiSlice';
 import { useAppDispatch } from '../hooks/useAppDispatch';
 import { AuthSliceInitialState, setCredentials } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router';
+import { FieldValues, useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type Error = {
   status: number;
   data: unknown;
 };
 
+const signInSchema = z.object({
+  username: z
+    .string()
+    .min(3, 'Username must be at least 3 characters')
+    .max(16, 'Username must be below 16 characters'),
+  password: z.string().min(6, 'Username must be at least 6 characters'),
+});
+
+type TSignInSchema = z.infer<typeof signInSchema>;
+
 const SignIn = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
+  const [error, setError] = useState('');
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
-  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-
-  const clearInputs = () => {
-    setUsername('');
-    setPassword('');
-  };
-  const clearError = () => setError(null);
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async ({ username, password }: FieldValues) => {
     try {
       const userData = (await login({ username, password }).unwrap()) as AuthSliceInitialState;
       dispatch(setCredentials({ ...userData }));
-      clearInputs();
+      reset();
       navigate('/');
     } catch (err) {
       const knownError = err as Error;
@@ -60,16 +66,16 @@ const SignIn = () => {
     }
   };
 
-  useEffect(() => {
-    clearError();
-  }, [username, password]);
+  console.log(errors);
+
+  const clearError = () => setError('');
 
   return (
     <Box sx={{ height: '100%', display: 'flex', alignItems: 'center' }}>
       <Stack
         component={'form'}
         autoComplete="off"
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
           p: 3,
           maxWidth: 320,
@@ -103,15 +109,17 @@ const SignIn = () => {
         <TextField
           variant="outlined"
           label="Username"
-          value={username}
-          onChange={handleUsernameChange}
+          {...register('username')}
+          error={!!errors.username}
+          helperText={errors.username?.message?.toString()}
         />
         <TextField
           variant="outlined"
           label="Password"
           type="password"
-          value={password}
-          onChange={handlePasswordChange}
+          {...register('password')}
+          error={!!errors.password}
+          helperText={errors.password?.message?.toString()}
         />
         <Button variant="contained" type="submit" sx={{ height: '36px' }}>
           {isLoading ? <CircularProgress color="inherit" size={24} /> : 'Sign in'}
