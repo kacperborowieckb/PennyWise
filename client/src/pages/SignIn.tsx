@@ -2,7 +2,9 @@ import {
   Alert,
   Box,
   Button,
+  Checkbox,
   CircularProgress,
+  FormControlLabel,
   Link,
   Snackbar,
   Stack,
@@ -13,11 +15,12 @@ import { useState } from 'react';
 import signInPageImg from '../assets/signin-page-img.svg';
 import { useLoginMutation } from '../features/auth/authApiSlice';
 import { useAppDispatch } from '../hooks/useAppDispatch';
-import { AuthSliceInitialState, setCredentials } from '../features/auth/authSlice';
+import { setCredentials } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router';
 import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { usePersist } from '../hooks/usePersist';
 
 type Error = {
   status: number;
@@ -42,13 +45,16 @@ const SignIn = () => {
     formState: { errors },
   } = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
   const [error, setError] = useState<string | null>(null);
+  const [persist, setPersist] = usePersist();
   const [login, { isLoading }] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const handlePersistChange = () => setPersist((prev: boolean) => !prev);
+
   const onSubmit = async ({ username, password }: FieldValues) => {
     try {
-      const userData = (await login({ username, password }).unwrap()) as AuthSliceInitialState;
+      const userData = await login({ username, password }).unwrap();
       dispatch(setCredentials({ ...userData }));
       reset();
       navigate('/');
@@ -119,6 +125,11 @@ const SignIn = () => {
           error={!!errors.password}
           helperText={errors.password?.message?.toString()}
         />
+        <FormControlLabel
+          control={<Checkbox checked={persist} onChange={handlePersistChange} />}
+          label="Trust this device?"
+        />
+
         <Button variant="contained" type="submit" sx={{ height: '36px' }}>
           {isLoading ? <CircularProgress color="inherit" size={24} /> : 'Sign in'}
         </Button>

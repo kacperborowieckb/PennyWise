@@ -1,5 +1,5 @@
 import { api } from '../api/apiSlice';
-import { setCredentials } from './authSlice';
+import { AuthSliceInitialState, setCredentials } from './authSlice';
 
 type Credentials = {
   username: string;
@@ -15,7 +15,7 @@ const authApiSlice = api.injectEndpoints({
         body: { ...credentials },
       }),
     }),
-    login: builder.mutation<void, Credentials>({
+    login: builder.mutation<AuthSliceInitialState, Credentials>({
       query: (credentials) => ({
         url: '/auth',
         method: 'POST',
