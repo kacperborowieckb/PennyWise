@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentToken } from '../../features/auth/authSlice';
 import { useEffect, useRef, useState } from 'react';
 import { CircularProgress } from '@mui/material';
-import SignInAgain from '../sign-in-again/SignInAgain';
+import SignIn from '../../pages/SignIn';
 
 const PersistLogin = () => {
   const [success, setSuccess] = useState<boolean>(false);
@@ -42,7 +42,7 @@ const PersistLogin = () => {
       />
     );
   } else if (isError) {
-    return <SignInAgain />;
+    return <SignIn />;
   }
 
   return null;

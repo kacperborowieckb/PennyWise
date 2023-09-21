@@ -19,11 +19,11 @@ function App() {
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth />}>
-              <Route path="/" element={<MainPage />} />
-            </Route>
-          </Route>
+          {/* <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth />}> */}
+          <Route path="/" element={<MainPage />} />
+          {/* </Route>
+          </Route> */}
           <Route path="*" element={<Missing />} />
         </Route>
       </Routes>
