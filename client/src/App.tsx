@@ -9,6 +9,7 @@ import SignUp from './pages/SignUp';
 import RequireAuth from './components/require-auth/RequireAuth';
 import Missing from './pages/Missing';
 import PersistLogin from './components/persist-login/PersistLogin';
+import Overview from './pages/Overview';
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           {/* <Route element={<PersistLogin />}>
             <Route element={<RequireAuth />}> */}
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<MainPage />}>
+            <Route index element={<Overview />} />
+          </Route>
           {/* </Route>
           </Route> */}
           <Route path="*" element={<Missing />} />

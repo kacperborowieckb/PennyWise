@@ -52,5 +52,12 @@ export const theme = extendTheme({
         LinkComponent: LinkBehavior,
       },
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: () => ({
+          borderRadius: 10,
+        }),
+      },
+    },
   },
 });

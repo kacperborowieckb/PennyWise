@@ -39,7 +39,7 @@ const Nav = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ borderRadius: 0 }} elevation={6}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Logo height={60} />
