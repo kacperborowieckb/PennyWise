@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 import { BarChart } from '@mui/x-charts';
 
 const dataset = [
@@ -27,8 +27,10 @@ const dataset = [
 const valueFormatter = (value: number) => `${value}$`;
 
 const MonthlyRatioChart = () => {
+  const matches = useMediaQuery('(max-width:900px)');
+
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ display: 'flex', mt: matches ? -8 : -4 }}>
       <BarChart
         legend={{ hidden: true }}
         xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
@@ -39,6 +41,7 @@ const MonthlyRatioChart = () => {
         ]}
         width={400}
         height={300}
+        sx={{ transform: 'scale(1.1)' }}
       />
     </Box>
   );

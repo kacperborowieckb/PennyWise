@@ -1,11 +1,11 @@
-import { Divider, Grid, Paper, Typography } from '@mui/material';
+import { Grid, Paper, Typography } from '@mui/material';
 import ExpensesChart from '../expenses-chart/ExpensesChart';
 import MonthlyRatioChart from '../monthly-ratio-chart/MonthlyRatioChart';
 
 const Budget = () => {
   return (
     <Paper sx={{ height: '100%', p: 2 }} elevation={6}>
-      <Grid container spacing={2} height={'100%'} p={2}>
+      <Grid container spacing={2} height={'100%'}>
         <Grid item xs={12} md={7} container>
           <Grid item xs={12}>
             <Typography component={'h1'} variant="h4">
