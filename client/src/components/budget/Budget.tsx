@@ -1,4 +1,4 @@
-import { Grid, Paper, Typography } from '@mui/material';
+import { Box, Grid, Paper, Stack, Typography } from '@mui/material';
 import ExpensesChart from '../expenses-chart/ExpensesChart';
 import MonthlyRatioChart from '../monthly-ratio-chart/MonthlyRatioChart';
 
@@ -12,7 +12,7 @@ const Budget = () => {
               4523.57$
             </Typography>
             <Typography component={'p'} variant="h6">
-              Total
+              Balance
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -23,7 +23,25 @@ const Budget = () => {
           <Typography component={'h2'} variant="h5">
             Expenses
           </Typography>
-          <ExpensesChart />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              height: '100%',
+              gap: 2,
+            }}
+          >
+            <ExpensesChart />
+            <Stack textAlign={'center'} pb={2}>
+              <Typography component={'h3'} variant="h5">
+                1253.24$
+              </Typography>
+              <Typography component={'p'} variant="subtitle1">
+                Total
+              </Typography>
+            </Stack>
+          </Box>
         </Grid>
       </Grid>
     </Paper>

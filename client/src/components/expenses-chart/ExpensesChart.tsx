@@ -4,7 +4,7 @@ import { categoriesTotalExpenses } from '../../helpers/mockCategories';
 
 const ExpensesChart = () => {
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
       <PieChart
         width={210}
         height={210}
