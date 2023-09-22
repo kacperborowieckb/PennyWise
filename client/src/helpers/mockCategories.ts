@@ -1,7 +1,9 @@
+import { Categories } from './categories';
+
 export const categoriesTotalExpenses = [
-  { categoryName: 'Bills', totalExpenses: 200 },
-  { categoryName: 'Personal', totalExpenses: 300 },
-  { categoryName: 'Groceries', totalExpenses: 50 },
-  { categoryName: 'Travel', totalExpenses: 150 },
-  { categoryName: 'Health', totalExpenses: 10 },
+  { categoryName: Categories.bills, totalExpenses: 200 },
+  { categoryName: Categories.personal, totalExpenses: 300 },
+  { categoryName: Categories.groceries, totalExpenses: 50 },
+  { categoryName: Categories.travel, totalExpenses: 150 },
+  { categoryName: Categories.health, totalExpenses: 80 },
 ];

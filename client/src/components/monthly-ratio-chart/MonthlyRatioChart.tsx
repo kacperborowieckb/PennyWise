@@ -1,5 +1,6 @@
 import { Box, useMediaQuery } from '@mui/material';
 import { BarChart } from '@mui/x-charts';
+import { green, red } from '@mui/material/colors';
 
 const dataset = [
   {
@@ -36,8 +37,13 @@ const MonthlyRatioChart = () => {
         xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
         dataset={dataset}
         series={[
-          { dataKey: 'income', label: 'Income', valueFormatter },
-          { dataKey: 'expenses', label: 'Expenses', valueFormatter },
+          { dataKey: 'expenses', label: 'Expenses', valueFormatter, color: red[400] },
+          {
+            dataKey: 'income',
+            label: 'Income',
+            valueFormatter,
+            color: green[400],
+          },
         ]}
         width={400}
         height={300}

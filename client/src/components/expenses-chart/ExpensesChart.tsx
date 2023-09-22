@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { PieChart } from '@mui/x-charts';
 import { categoriesTotalExpenses } from '../../helpers/mockCategories';
+import { categoriesProperties } from '../../helpers/categoriesProperties';
 
 const ExpensesChart = () => {
   return (
@@ -8,7 +9,6 @@ const ExpensesChart = () => {
       <PieChart
         width={210}
         height={210}
-        colors={['red', 'orange', 'pink', 'blue', 'green']}
         legend={{ hidden: true }}
         series={[
           {
@@ -16,6 +16,7 @@ const ExpensesChart = () => {
               ...categoriesTotalExpenses.map((category) => ({
                 label: category.categoryName,
                 value: category.totalExpenses,
+                color: categoriesProperties[category.categoryName].color,
               })),
             ],
             innerRadius: 25,
