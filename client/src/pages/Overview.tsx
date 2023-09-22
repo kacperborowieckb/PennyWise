@@ -5,12 +5,12 @@ import Budget from '../components/budget/Budget';
 
 const Overview = () => {
   return (
-    <Grid container spacing={2} height={'100%'} p={2}>
-      <Grid item xs={8} container spacing={2} direction={'column'}>
-        <Grid item xs={8}>
+    <Grid container spacing={2} height={'100%'} p={2} direction={{}}>
+      <Grid item xs={8} container>
+        <Grid item xs={12}>
           <Budget />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sx={{ mt: 2 }}>
           <LastTransactions />
         </Grid>
       </Grid>
