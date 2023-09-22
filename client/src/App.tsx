@@ -10,6 +10,8 @@ import RequireAuth from './components/require-auth/RequireAuth';
 import Missing from './pages/Missing';
 import PersistLogin from './components/persist-login/PersistLogin';
 import Overview from './pages/Overview';
+import Transactions from './pages/Transactions';
+import Goals from './pages/Goals';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             <Route element={<RequireAuth />}> */}
           <Route path="/" element={<MainPage />}>
             <Route index element={<Overview />} />
+            <Route path="transactions" element={<Transactions />} />
+            <Route path="goals" element={<Goals />} />
           </Route>
           {/* </Route>
           </Route> */}

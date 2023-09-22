@@ -35,7 +35,7 @@ export const theme = extendTheme({
     MuiCssBaseline: {
       styleOverrides: `
         #root {
-          height: 100dvh;
+          min-height: 100dvh;
           display: flex;
           flex-direction: column;
           align-items: center;

@@ -15,13 +15,22 @@ import pennyWiseLogoImg from '../../assets/logo.svg';
 import MenuIcon from '@mui/icons-material/Menu';
 import { MouseEvent, useState } from 'react';
 import Logo from '../logo/Logo';
+import { useLocation } from 'react-router';
 
 const pages = ['Overview', 'Transactions', 'Goals'];
 const settings = ['Setting', 'Logout'];
+const locationsPath: {
+  [key: string]: string;
+} = {
+  '/': pages[0],
+  '/transactions': pages[1],
+  '/goals': pages[2],
+};
 
 const Nav = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const location = useLocation();
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -83,7 +92,9 @@ const Nav = () => {
             {pages.map((page) => (
               <Button
                 key={page}
+                href={`/${page === locationsPath['/'] ? '' : page.toLowerCase()}`}
                 onClick={handleCloseNavMenu}
+                variant={locationsPath[location.pathname] === page ? 'contained' : 'text'}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}

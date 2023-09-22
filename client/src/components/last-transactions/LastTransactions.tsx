@@ -1,6 +1,6 @@
-import { Card, CardContent, Paper, Stack, Typography } from '@mui/material';
+import { Paper, Stack, Typography } from '@mui/material';
 import { mockTransactions } from '../../helpers/mockTransactions';
-import { categoriesProperties } from '../../helpers/categoriesProperties';
+import TransactionCard from '../transaction-card/TransactionCard';
 
 const LastTransactions = () => {
   return (
@@ -8,41 +8,19 @@ const LastTransactions = () => {
       sx={{
         height: '100%',
         p: 2,
-        overflowX: 'auto',
-        '&::-webkit-scrollbar': { display: 'none' },
       }}
       elevation={6}
     >
-      <Stack direction={'row'} height={'100%'} spacing={2}>
+      <Typography component={'h3'} variant="h6" mb={1}>
+        Last transactions:
+      </Typography>
+      <Stack
+        direction={'row'}
+        spacing={2}
+        sx={{ overflowX: 'auto', '&::-webkit-scrollbar': { display: 'none' } }}
+      >
         {mockTransactions.map((transaction, i) => (
-          <Card variant="outlined" sx={{ minWidth: 180, cursor: 'pointer' }} key={i}>
-            <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <Typography
-                align="center"
-                component={'h6'}
-                variant="h5"
-                sx={{
-                  px: 1,
-                  width: '100%',
-                  borderRadius: 1,
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                }}
-                bgcolor={
-                  transaction.value > 0
-                    ? (theme) => theme.palette.success.main
-                    : (theme) => theme.palette.error.main
-                }
-              >
-                {transaction.value + ' $'}
-              </Typography>
-              <Typography align="center" component={'h6'} variant="h6">
-                Category:
-              </Typography>
-              {categoriesProperties[transaction.category].icon}
-            </CardContent>
-          </Card>
+          <TransactionCard value={transaction.value} category={transaction.category} key={i} />
         ))}
       </Stack>
     </Paper>
