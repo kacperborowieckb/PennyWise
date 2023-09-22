@@ -4,4 +4,5 @@ export enum Categories {
   groceries = 'Groceries',
   travel = 'Travel',
   health = 'Health',
+  income = 'Income',
 }

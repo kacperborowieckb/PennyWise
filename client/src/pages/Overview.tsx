@@ -7,10 +7,10 @@ const Overview = () => {
   return (
     <Grid container spacing={2} p={2} height={'100%'}>
       <Grid item xs={12} sm={7} md={8} container>
-        <Grid item xs={12}>
+        <Grid item xs={12} height={'75%'}>
           <Budget />
         </Grid>
-        <Grid item xs={12} sx={{ mt: 2 }}>
+        <Grid item xs={12} sx={{ mt: '14px' }} height={'calc(25% - 14px)'}>
           <LastTransactions />
         </Grid>
       </Grid>
