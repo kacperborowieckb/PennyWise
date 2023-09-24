@@ -1,4 +1,4 @@
-import { Flag, Paid, Savings, Wallet } from '@mui/icons-material';
+import { CalendarMonth, Flag, Paid, Savings, Wallet } from '@mui/icons-material';
 import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
 
 const SpeedActionsDial = () => {
@@ -22,6 +22,11 @@ const SpeedActionsDial = () => {
           key={'Transfer to goal'}
           icon={<Savings />}
           tooltipTitle={'Transfer to goal'}
+        />
+        <SpeedDialAction
+          key={'Plan a payment'}
+          icon={<CalendarMonth />}
+          tooltipTitle={'Plan a payment'}
         />
       </SpeedDial>
     </Box>
