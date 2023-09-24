@@ -16,9 +16,11 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { MouseEvent, useState } from 'react';
 import Logo from '../logo/Logo';
 import { useLocation } from 'react-router';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { selectCurrentUserName } from '../../features/auth/authSlice';
+import { useLogoutMutation } from '../../features/auth/authApiSlice';
 
 const pages = ['Overview', 'Transactions', 'Goals'];
-const settings = ['Setting', 'Logout'];
 const locationsPath: {
   [key: string]: string;
 } = {
@@ -31,6 +33,8 @@ const Nav = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const location = useLocation();
+  const username = useAppSelector(selectCurrentUserName);
+  const [logout] = useLogoutMutation();
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -45,6 +49,11 @@ const Nav = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleCloseUserMenu();
   };
 
   return (
@@ -101,8 +110,10 @@ const Nav = () => {
               </Button>
             ))}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 0 }}>
+            <Typography component={'p'} variant="body1">
+              {username}
+            </Typography>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src={pennyWiseLogoImg} />
@@ -124,11 +135,12 @@ const Nav = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Setting</Typography>
+              </MenuItem>
+              <MenuItem onClick={handleLogout}>
+                <Typography textAlign="center">Log out</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

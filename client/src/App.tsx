@@ -22,15 +22,15 @@ function App() {
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          {/* <Route element={<PersistLogin />}>
-            <Route element={<RequireAuth />}> */}
-          <Route path="/" element={<MainPage />}>
-            <Route index element={<Overview />} />
-            <Route path="transactions" element={<Transactions />} />
-            <Route path="goals" element={<Goals />} />
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth />}>
+              <Route path="/" element={<MainPage />}>
+                <Route index element={<Overview />} />
+                <Route path="transactions" element={<Transactions />} />
+                <Route path="goals" element={<Goals />} />
+              </Route>
+            </Route>
           </Route>
-          {/* </Route>
-          </Route> */}
           <Route path="*" element={<Missing />} />
         </Route>
       </Routes>

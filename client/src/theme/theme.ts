@@ -47,6 +47,7 @@ export const theme = extendTheme({
           height: 100dvh;
           display: flex;
           flex-direction: column;
+          align-items: center;
         }
       `,
     },
