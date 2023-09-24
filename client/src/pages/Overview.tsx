@@ -10,7 +10,7 @@ const Overview = () => {
         <Grid item xs={12} height={'calc(100% - 180px - 14px)'}>
           <Budget />
         </Grid>
-        <Grid item xs={12} sx={{ mt: '14px' }} maxHeight={180}>
+        <Grid item xs={12} sx={{ mt: '14px' }} height={180}>
           <LastTransactions />
         </Grid>
       </Grid>

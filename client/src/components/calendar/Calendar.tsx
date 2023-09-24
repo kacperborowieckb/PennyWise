@@ -16,7 +16,6 @@ const Calendar = () => {
           sx={{ maxWidth: '100%' }}
         />
       </LocalizationProvider>
-
       <Button variant="contained" sx={{ margin: '0 auto' }}>
         Plan a payment
       </Button>

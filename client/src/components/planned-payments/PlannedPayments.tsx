@@ -47,14 +47,14 @@ const PlannedPayments = () => {
   const checkIfSelected = (id: number): boolean => selected.indexOf(id) !== -1;
 
   return (
-    <>
+    <Stack flex={1} spacing={2}>
       <Stack spacing={2} direction={'row'} height={32}>
         <Typography component={'h3'} variant="h6" flexGrow={1}>
           Planned payments:
         </Typography>
         {selected.length > 0 && <MakePlannedPayments />}
       </Stack>
-      <TableContainer component={Paper} sx={{ height: 200 }}>
+      <TableContainer component={Paper} sx={{ height: 200, flexGrow: 1 }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -84,7 +84,7 @@ const PlannedPayments = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Stack>
   );
 };
 
