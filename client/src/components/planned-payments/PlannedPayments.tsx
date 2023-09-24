@@ -13,6 +13,7 @@ import {
 import { mockTransactions } from '../../helpers/mockTransactions';
 import { useState } from 'react';
 import MakePlannedPayments from '../make-planned-payments/MakePlannedPayments';
+import noPlannedTransactionsImg from '../../assets/no-planned-transactions-img.svg';
 
 const columns: string[] = ['ID', 'Value', 'Category'];
 
@@ -54,36 +55,45 @@ const PlannedPayments = () => {
         </Typography>
         {selected.length > 0 && <MakePlannedPayments />}
       </Stack>
-      <TableContainer component={Paper} sx={{ height: 200, flexGrow: 1 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <Checkbox checked={selectAll} onChange={handleSelectAll} />
-              </TableCell>
-              {columns.map((column, i) => (
-                <TableCell key={i}>{column}</TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => {
-              const isSelcted = checkIfSelected(row.id);
-              const handleClick = () => handleSelectRow(row.id);
-              return (
-                <TableRow key={row.id} hover onClick={handleClick} selected={isSelcted}>
-                  <TableCell>
-                    <Checkbox checked={isSelcted} onChange={handleClick} />
-                  </TableCell>
-                  {Object.keys(row).map((name, i) => (
-                    <TableCell key={i}>{row[name]}</TableCell>
-                  ))}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {rows.length > 0 ? (
+        <TableContainer component={Paper} sx={{ height: 200, flexGrow: 1 }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Checkbox checked={selectAll} onChange={handleSelectAll} />
+                </TableCell>
+                {columns.map((column, i) => (
+                  <TableCell key={i}>{column}</TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => {
+                const isSelcted = checkIfSelected(row.id);
+                const handleClick = () => handleSelectRow(row.id);
+                return (
+                  <TableRow key={row.id} hover onClick={handleClick} selected={isSelcted}>
+                    <TableCell>
+                      <Checkbox checked={isSelcted} onChange={handleClick} />
+                    </TableCell>
+                    {Object.keys(row).map((name, i) => (
+                      <TableCell key={i}>{row[name]}</TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <Stack flex={1}>
+          <img src={noPlannedTransactionsImg} alt="No planned transactions" height={150} />
+          <Typography component={'h3'} variant="h6" mt={2} align="center">
+            No planned transactions!
+          </Typography>
+        </Stack>
+      )}
     </Stack>
   );
 };
