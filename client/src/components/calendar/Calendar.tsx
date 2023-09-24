@@ -10,7 +10,11 @@ const Calendar = () => {
   return (
     <Stack>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DateCalendar value={selectedDate} onChange={(newDate) => setSelectedDate(newDate)} />
+        <DateCalendar
+          value={selectedDate}
+          onChange={(newDate) => setSelectedDate(newDate)}
+          sx={{ maxWidth: '100%' }}
+        />
       </LocalizationProvider>
 
       <Button variant="contained" sx={{ margin: '0 auto' }}>
