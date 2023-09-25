@@ -42,7 +42,7 @@ const PersistLogin = () => {
       />
     );
   } else if (isError) {
-    return <Navigate to={'/signin'} state={{ from: location }} replace />;
+    return <Navigate to={'/welcome'} state={{ from: location }} replace />;
   }
 
   return undefined;

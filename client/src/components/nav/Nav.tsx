@@ -15,7 +15,7 @@ import pennyWiseLogoImg from '../../assets/logo.svg';
 import MenuIcon from '@mui/icons-material/Menu';
 import { MouseEvent, useState } from 'react';
 import Logo from '../logo/Logo';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentUserName } from '../../features/auth/authSlice';
 import { useLogoutMutation } from '../../features/auth/authApiSlice';
@@ -35,6 +35,7 @@ const Nav = () => {
   const location = useLocation();
   const username = useAppSelector(selectCurrentUserName);
   const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -54,6 +55,7 @@ const Nav = () => {
   const handleLogout = () => {
     logout();
     handleCloseUserMenu();
+    navigate('/welcome');
   };
 
   return (
