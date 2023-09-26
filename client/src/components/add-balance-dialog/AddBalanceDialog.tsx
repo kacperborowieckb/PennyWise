@@ -10,9 +10,18 @@ import {
   InputLabel,
   OutlinedInput,
 } from '@mui/material';
+import { useAddBalanceMutation } from '../../features/auth/walletApiSlice';
+import { useSelector } from 'react-redux';
+import { selectCurrentUserId } from '../../features/auth/authSlice';
 
 const AddBalanceDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => void }) => {
   // ADD ERROR IF BALANCE BELOW 0
+  const [addBalance] = useAddBalanceMutation();
+  const uid = useSelector(selectCurrentUserId);
+
+  const addBalanceTest = () => {
+    addBalance({ uid, amount: 200 });
+  };
 
   return (
     <Dialog open={isOpen} onClose={toogle}>
@@ -29,7 +38,7 @@ const AddBalanceDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toogle}>Cancel</Button>
-        <Button onClick={toogle} variant="contained">
+        <Button onClick={addBalanceTest} variant="contained">
           Add
         </Button>
       </DialogActions>
