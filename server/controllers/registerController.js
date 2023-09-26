@@ -1,5 +1,7 @@
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
+const Wallet = require('../model/Wallet');
+const ObjectId = require('mongodb').ObjectId;
 
 const handleNewUser = async (req, res) => {
   const { username, password } = req.body;
@@ -13,13 +15,17 @@ const handleNewUser = async (req, res) => {
   try {
     //encrypt the password
     const hashedPwd = await bcrypt.hash(password, 10);
+    const _id = new ObjectId();
 
     //create and store the new user
     const result = await User.create({
+      _id,
       username: username,
       password: hashedPwd,
     });
-
+    await Wallet.create({
+      uid: _id.toString(),
+    });
     console.log(result);
 
     res.status(201).json({ success: `New user ${username} created!` });

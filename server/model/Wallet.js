@@ -6,6 +6,10 @@ const walletSchema = new Schema({
     type: String,
     required: true,
   },
+  currency: {
+    type: String,
+    default: '$',
+  },
   balance: {
     type: Number,
     default: 0,
