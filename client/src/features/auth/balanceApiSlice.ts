@@ -5,11 +5,11 @@ type AddBalanceMutationArgs = {
   amount: number;
 };
 
-const walletApiSlice = api.injectEndpoints({
+const balanceApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     addBalance: builder.mutation<void, AddBalanceMutationArgs>({
       query: (args) => ({
-        url: '/wallet',
+        url: '/balance',
         method: 'PATCH',
         body: { ...args },
       }),
@@ -17,4 +17,4 @@ const walletApiSlice = api.injectEndpoints({
   }),
 });
 
-export const { useAddBalanceMutation } = walletApiSlice;
+export const { useAddBalanceMutation } = balanceApiSlice;
