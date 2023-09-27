@@ -7,14 +7,22 @@ type AddBalanceMutationArgs = {
 
 const balanceApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
+    getBalance: builder.query<{ balance: number }, string>({
+      query: (uid) => ({
+        url: `/balance/${uid}`,
+        method: 'GET',
+      }),
+      providesTags: ['Balance'],
+    }),
     addBalance: builder.mutation<void, AddBalanceMutationArgs>({
       query: (args) => ({
         url: '/balance',
         method: 'PATCH',
         body: { ...args },
       }),
+      invalidatesTags: ['Balance'],
     }),
   }),
 });
 
-export const { useAddBalanceMutation } = balanceApiSlice;
+export const { useGetBalanceQuery, useAddBalanceMutation } = balanceApiSlice;

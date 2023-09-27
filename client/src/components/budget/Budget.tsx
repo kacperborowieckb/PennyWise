@@ -1,7 +1,7 @@
-import { Box, Grid, Paper, Tooltip, Typography } from '@mui/material';
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import ExpensesChart from '../expenses-chart/ExpensesChart';
 import MonthlyRatioChart from '../monthly-ratio-chart/MonthlyRatioChart';
-import { Info } from '@mui/icons-material';
+import Balance from '../balance/Balance';
 
 const Budget = () => {
   return (
@@ -9,19 +9,7 @@ const Budget = () => {
       <Grid container spacing={2} height={'100%'}>
         <Grid item xs={12} md={7} container>
           <Grid item xs={12}>
-            <Typography component={'h1'} variant="h4" sx={{ position: 'relative' }}>
-              4523.57 $
-              <Tooltip
-                title="You can change currency in settings"
-                sx={{ position: 'absolute', ml: '3px' }}
-                enterTouchDelay={0}
-              >
-                <Info fontSize="small" />
-              </Tooltip>
-            </Typography>
-            <Typography component={'p'} variant="h6">
-              Balance
-            </Typography>
+            <Balance />
           </Grid>
           <Grid item xs={12}>
             <MonthlyRatioChart />

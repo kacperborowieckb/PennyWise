@@ -1,5 +1,15 @@
 const Wallet = require('../model/Wallet');
 
+const getBalance = async (req, res) => {
+  if (!req?.params?.uid) return res.status(400).json({ message: 'User ID required' });
+  const uid = req.params.uid;
+  const wallet = await Wallet.findOne({ uid }).exec();
+
+  if (!wallet) return res.status(400).json({ message: 'Wallent not found' });
+
+  return res.json(wallet.balance);
+};
+
 const addBalance = async (req, res) => {
   const { uid, amount } = req.body;
 
@@ -17,5 +27,6 @@ const addBalance = async (req, res) => {
 };
 
 module.exports = {
+  getBalance,
   addBalance,
 };

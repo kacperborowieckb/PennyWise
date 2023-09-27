@@ -29,12 +29,11 @@ const AddBalanceDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
     handleSubmit,
     reset,
     setError,
-    getValues,
     formState: { errors },
   } = useForm<TAddBalanceSchema>({ resolver: zodResolver(addBalanceSchema) });
   const [addBalance] = useAddBalanceMutation();
   const uid = useSelector(selectCurrentUserId);
-  console.log(getValues());
+
   const handleAddBalance = async ({ amount }: FieldValues) => {
     try {
       await addBalance({ uid, amount }).unwrap();
