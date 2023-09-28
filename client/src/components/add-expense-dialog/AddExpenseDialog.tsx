@@ -19,9 +19,11 @@ const AddExpenseDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
     handleSubmit,
     reset,
     setError,
+    getValues,
+    control,
     formState: { errors },
   } = useForm<TAddExpenseSchema>({ resolver: zodResolver(addExpenseSchema) });
-
+  console.log(getValues());
   const handleAddExpense = async () => {
     try {
       reset();
@@ -41,13 +43,13 @@ const AddExpenseDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
       onSubmit={handleSubmit(handleAddExpense)}
     >
       <DialogTitle>Add expense</DialogTitle>
-      <DialogContent>
-        <CategoryInput register={register} errors={errors} />
+      <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
+        <CategoryInput register={register} errors={errors} control={control} />
         <AmountInput register={register} errors={errors} />
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toogle}>Cancel</Button>
-        <Button onClick={toogle} variant="contained">
+        <Button type="submit" variant="contained">
           Add
         </Button>
       </DialogActions>
