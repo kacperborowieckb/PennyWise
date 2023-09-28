@@ -49,7 +49,7 @@ const PlannedPayments = () => {
 
   return (
     <Stack flex={1} spacing={2}>
-      <Stack spacing={2} direction={'row'} height={32}>
+      <Stack direction={'row'} height={32}>
         <Typography component={'h3'} variant="h6" flexGrow={1}>
           Planned payments:
         </Typography>

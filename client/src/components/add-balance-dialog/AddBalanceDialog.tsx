@@ -1,14 +1,10 @@
 import {
   Button,
+  CircularProgress,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
-  FormHelperText,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
 } from '@mui/material';
 import { useAddBalanceMutation } from '../../features/auth/balanceApiSlice';
 import { useSelector } from 'react-redux';
@@ -16,12 +12,13 @@ import { selectCurrentUserId } from '../../features/auth/authSlice';
 import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import AmountInput from '../amount-input/AmountInput';
 
 const addBalanceSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
 });
 
-type TAddBalanceSchema = z.infer<typeof addBalanceSchema>;
+export type TAddBalanceSchema = z.infer<typeof addBalanceSchema>;
 
 const AddBalanceDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => void }) => {
   const {
@@ -31,7 +28,7 @@ const AddBalanceDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
     setError,
     formState: { errors },
   } = useForm<TAddBalanceSchema>({ resolver: zodResolver(addBalanceSchema) });
-  const [addBalance] = useAddBalanceMutation();
+  const [addBalance, { isLoading }] = useAddBalanceMutation();
   const uid = useSelector(selectCurrentUserId);
 
   const handleAddBalance = async ({ amount }: FieldValues) => {
@@ -55,26 +52,12 @@ const AddBalanceDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
     >
       <DialogTitle>Add balance</DialogTitle>
       <DialogContent>
-        <FormControl fullWidth sx={{ mt: 1 }} error={!!errors.amount}>
-          <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-            label="Amount"
-            {...register('amount')}
-            error={!!errors.amount}
-            autoComplete="off"
-            type="number"
-          />
-          <FormHelperText error={!!errors.amount}>
-            {errors.amount?.message?.toString()}
-          </FormHelperText>
-        </FormControl>
+        <AmountInput register={register} errors={errors} />
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toogle}>Cancel</Button>
         <Button variant="contained" type="submit">
-          Add
+          {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>
       </DialogActions>
     </Dialog>
