@@ -5,6 +5,9 @@ import { z } from 'zod';
 import AmountInput from '../amount-input/AmountInput';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CategoryInput from '../category-input/CategoryInput';
+import { useSelector } from 'react-redux';
+import { selectCurrentUserId } from '../../features/auth/authSlice';
+import { useAddExpenseMutation } from '../../features/auth/expenseApiSlice';
 
 const addExpenseSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
@@ -23,9 +26,12 @@ const AddExpenseDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
     control,
     formState: { errors },
   } = useForm<TAddExpenseSchema>({ resolver: zodResolver(addExpenseSchema) });
-  console.log(getValues());
-  const handleAddExpense = async () => {
+  const uid = useSelector(selectCurrentUserId);
+  const [addExpense, { isLoading }] = useAddExpenseMutation();
+
+  const handleAddExpense = async ({ amount, category }: TAddExpenseSchema) => {
     try {
+      await addExpense({ uid, amount, category }).unwrap();
       reset();
       toogle();
     } catch (err) {

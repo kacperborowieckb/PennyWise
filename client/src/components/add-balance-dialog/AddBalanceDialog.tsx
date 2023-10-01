@@ -9,7 +9,7 @@ import {
 import { useAddBalanceMutation } from '../../features/auth/balanceApiSlice';
 import { useSelector } from 'react-redux';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AmountInput from '../amount-input/AmountInput';
@@ -31,7 +31,7 @@ const AddBalanceDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
   const [addBalance, { isLoading }] = useAddBalanceMutation();
   const uid = useSelector(selectCurrentUserId);
 
-  const handleAddBalance = async ({ amount }: FieldValues) => {
+  const handleAddBalance = async ({ amount }: TAddBalanceSchema) => {
     try {
       await addBalance({ uid, amount }).unwrap();
       reset();

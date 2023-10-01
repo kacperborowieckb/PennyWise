@@ -42,18 +42,16 @@ const walletSchema = new Schema({
   },
   transactions: [
     {
-      transactionId: { type: mongoose.Schema.Types.ObjectId, required: true },
       createdAt: { type: Date, required: true },
-      value: { type: Number, required: true },
+      amount: { type: Number, required: true },
       category: { type: String, required: true },
     },
   ],
   plannedTransactions: [
     {
-      transactionId: { type: mongoose.Schema.Types.ObjectId, required: true },
       createdAt: { type: Date, required: true },
       plannedFor: { type: String, required: true },
-      value: { type: Number, required: true },
+      amount: { type: Number, required: true },
       category: { type: String, required: true },
     },
   ],
