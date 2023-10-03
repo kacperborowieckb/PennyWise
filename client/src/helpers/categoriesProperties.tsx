@@ -14,10 +14,10 @@ type CategoriesProperiesType = {
 };
 
 export const categoriesProperties: CategoriesProperiesType = {
-  [Categories.bills]: { color: '#88524e', icon: <Receipt /> },
-  [Categories.personal]: { color: '#FD4A21', icon: <EmojiPeople /> },
-  [Categories.groceries]: { color: '#1DA200', icon: <LocalGroceryStore /> },
-  [Categories.travel]: { color: '#3EB6ED', icon: <Flight /> },
-  [Categories.health]: { color: '#f40000', icon: <LocalHospital /> },
-  [Categories.income]: { color: green[400], icon: <AttachMoney /> },
+  [Categories.bills.toLowerCase()]: { color: '#88524e', icon: <Receipt /> },
+  [Categories.personal.toLowerCase()]: { color: '#FD4A21', icon: <EmojiPeople /> },
+  [Categories.groceries.toLowerCase()]: { color: '#1DA200', icon: <LocalGroceryStore /> },
+  [Categories.travel.toLowerCase()]: { color: '#3EB6ED', icon: <Flight /> },
+  [Categories.health.toLowerCase()]: { color: '#f40000', icon: <LocalHospital /> },
+  [Categories.income.toLowerCase()]: { color: green[400], icon: <AttachMoney /> },
 };

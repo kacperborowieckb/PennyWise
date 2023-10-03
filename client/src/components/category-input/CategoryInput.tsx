@@ -30,7 +30,7 @@ const CategoryInput = ({ errors, control }: AmountInputProps) => {
               .map((category) => (
                 <MenuItem key={category} value={category}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    {categoriesProperties[category].icon}
+                    {categoriesProperties[category.toLowerCase()].icon}
                     {category}
                   </Box>
                 </MenuItem>

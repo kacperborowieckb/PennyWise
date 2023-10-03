@@ -1,6 +1,6 @@
 import { Info } from '@mui/icons-material';
 import { Box, CircularProgress, Tooltip, Typography } from '@mui/material';
-import { useGetBalanceQuery } from '../../features/auth/balanceApiSlice';
+import { useGetBalanceQuery } from '../../features/balance/balanceApiSlice';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
 

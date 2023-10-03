@@ -1,5 +1,11 @@
 const { findWallet } = require('../utils/findWallet');
 
+const getExpenses = async (req, res) => {
+  const wallet = await findWallet(req?.params?.uid, res);
+
+  return res.json({ totalExpenses: wallet.expenses, expenses: wallet.categoriesExpenses });
+};
+
 const addExpense = async (req, res) => {
   const { uid, category, amount } = req.body;
 
@@ -17,5 +23,6 @@ const addExpense = async (req, res) => {
 };
 
 module.exports = {
+  getExpenses,
   addExpense,
 };

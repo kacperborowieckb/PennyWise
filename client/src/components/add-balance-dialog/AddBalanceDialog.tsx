@@ -6,7 +6,7 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material';
-import { useAddBalanceMutation } from '../../features/auth/balanceApiSlice';
+import { useAddBalanceMutation } from '../../features/balance/balanceApiSlice';
 import { useSelector } from 'react-redux';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
 import { useForm } from 'react-hook-form';

@@ -38,7 +38,7 @@ const TransactionCard = ({ value, category }: TransactionCardTypes) => {
         <Typography align="center" component={'h6'} variant="h6">
           Category:
         </Typography>
-        {categoriesProperties[category].icon}
+        {categoriesProperties[category.toLowerCase()].icon}
       </CardContent>
     </Card>
   );

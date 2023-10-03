@@ -14,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import CategoryInput from '../category-input/CategoryInput';
 import { useSelector } from 'react-redux';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
-import { useAddExpenseMutation } from '../../features/auth/expenseApiSlice';
+import { useAddExpenseMutation } from '../../features/expenses/expensesApiSlice';
 
 const addExpenseSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
