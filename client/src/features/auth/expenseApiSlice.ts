@@ -15,6 +15,7 @@ const expenseApiSlice = api.injectEndpoints({
         method: 'POST',
         body: { ...args },
       }),
+      invalidatesTags: ['Balance'],
     }),
   }),
 });

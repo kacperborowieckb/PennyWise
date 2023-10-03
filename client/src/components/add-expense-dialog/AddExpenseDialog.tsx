@@ -1,4 +1,11 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from '@mui/material';
 import { Categories } from '../../helpers/categories';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -22,7 +29,6 @@ const AddExpenseDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
     handleSubmit,
     reset,
     setError,
-    getValues,
     control,
     formState: { errors },
   } = useForm<TAddExpenseSchema>({ resolver: zodResolver(addExpenseSchema) });
@@ -56,7 +62,7 @@ const AddExpenseDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => v
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toogle}>Cancel</Button>
         <Button type="submit" variant="contained">
-          Add
+          {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>
       </DialogActions>
     </Dialog>

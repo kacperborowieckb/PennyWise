@@ -1,7 +1,7 @@
 const { findWallet } = require('../utils/findWallet');
 
 const getBalance = async (req, res) => {
-  const wallet = await findWallet(!req?.params?.uid, res);
+  const wallet = await findWallet(req?.params?.uid, res);
 
   return res.json(wallet.balance);
 };
