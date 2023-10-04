@@ -10,8 +10,10 @@ const addBalance = async (req, res) => {
   const { uid, amount } = req.body;
 
   const wallet = await findWallet(uid, res);
+  const createdAt = new Date();
 
   wallet.balance += amount;
+  wallet.transactions.push({ category: 'Income', amount, createdAt });
 
   await wallet.save();
 
