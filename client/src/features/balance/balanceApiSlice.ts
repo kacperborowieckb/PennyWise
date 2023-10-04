@@ -20,7 +20,7 @@ const balanceApiSlice = api.injectEndpoints({
         method: 'PATCH',
         body: { ...args },
       }),
-      invalidatesTags: ['Balance'],
+      invalidatesTags: ['Balance', 'Transactions'],
     }),
   }),
 });

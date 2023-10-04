@@ -1,9 +1,11 @@
 import { Box, Paper, Stack, Typography } from '@mui/material';
-import { mockTransactions } from '../../helpers/mockTransactions';
 import TransactionCard from '../transaction-card/TransactionCard';
 import noTransactionsMade from '../../assets/no-transactions-made-img.svg';
+import { useGetTransactionsQuery } from '../../features/transactions/transactionsApiSlice';
 
 const LastTransactions = () => {
+  const { data, isLoading } = useGetTransactionsQuery();
+
   return (
     <Paper
       sx={{
@@ -23,10 +25,8 @@ const LastTransactions = () => {
           '&::-webkit-scrollbar': { display: 'none' },
         }}
       >
-        {mockTransactions.length > 0 ? (
-          mockTransactions.map((transaction, i) => (
-            <TransactionCard value={transaction.value} category={transaction.category} key={i} />
-          ))
+        {!isLoading ? (
+          data?.ids.slice(0, 6).map((id) => <TransactionCard id={id as string} key={id} />)
         ) : (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} flex={1}>
             <img src={noTransactionsMade} alt="No planned transactions" height={100} />

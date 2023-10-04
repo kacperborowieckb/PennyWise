@@ -31,7 +31,7 @@ const authApiSlice = api.injectEndpoints({
         try {
           await queryFulfilled;
           dispatch(logOut());
-          dispatch(api.util.resetApiState);
+          dispatch(api.util.resetApiState());
         } catch (err) {
           console.error(err);
         }

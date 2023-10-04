@@ -12,6 +12,7 @@ import PersistLogin from './components/persist-login/PersistLogin';
 import Overview from './pages/Overview';
 import Transactions from './pages/Transactions';
 import Goals from './pages/Goals';
+import Prefetch from './components/prefetch/Prefetch';
 
 function App() {
   return (
@@ -24,10 +25,12 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route element={<PersistLogin />}>
             <Route element={<RequireAuth />}>
-              <Route path="/" element={<MainPage />}>
-                <Route index element={<Overview />} />
-                <Route path="transactions" element={<Transactions />} />
-                <Route path="goals" element={<Goals />} />
+              <Route element={<Prefetch />}>
+                <Route path="/" element={<MainPage />}>
+                  <Route index element={<Overview />} />
+                  <Route path="transactions" element={<Transactions />} />
+                  <Route path="goals" element={<Goals />} />
+                </Route>
               </Route>
             </Route>
           </Route>

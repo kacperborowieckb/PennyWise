@@ -1,7 +1,7 @@
 import { Categories } from '../../helpers/categories';
 import { api } from '../api/apiSlice';
 
-export type Transaction = {
+export type Expense = {
   uid: string;
   category: Categories;
   amount: number;
@@ -21,13 +21,13 @@ const expenseApiSlice = api.injectEndpoints({
       }),
       providesTags: ['Expenses'],
     }),
-    addExpense: builder.mutation<void, Transaction>({
+    addExpense: builder.mutation<void, Expense>({
       query: (args) => ({
         url: '/expenses',
         method: 'POST',
         body: { ...args },
       }),
-      invalidatesTags: ['Balance', 'Expenses'],
+      invalidatesTags: ['Balance', 'Expenses', 'Transactions'],
     }),
   }),
 });
