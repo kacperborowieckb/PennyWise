@@ -1,7 +1,6 @@
 import { EntityState, createEntityAdapter } from '@reduxjs/toolkit';
 import { api } from '../api/apiSlice';
 import { Categories } from '../../helpers/categories';
-import { store } from '../../app/store';
 
 export type Transaction = {
   createdAt: Date;
