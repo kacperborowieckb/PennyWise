@@ -20,8 +20,8 @@ const initialState = transactionsAdapter.getInitialState();
 export const transactionsApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getTransactions: builder.query<EntityState<Transaction>, string>({
-      query: () => ({
-        url: `/transactions/${store.getState().auth._id}`,
+      query: (uid) => ({
+        url: `/transactions/${uid}`,
         method: 'GET',
       }),
       transformResponse: (responseData: Transaction[]) => {

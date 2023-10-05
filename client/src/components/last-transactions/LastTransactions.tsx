@@ -2,9 +2,12 @@ import { Box, Paper, Stack, Typography } from '@mui/material';
 import TransactionCard from '../transaction-card/TransactionCard';
 import noTransactionsMade from '../../assets/no-transactions-made-img.svg';
 import { useGetTransactionsQuery } from '../../features/transactions/transactionsApiSlice';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { selectCurrentUserId } from '../../features/auth/authSlice';
 
 const LastTransactions = () => {
-  const { data, isLoading } = useGetTransactionsQuery();
+  const uid = useAppSelector(selectCurrentUserId);
+  const { data, isLoading } = useGetTransactionsQuery(uid);
 
   return (
     <Paper

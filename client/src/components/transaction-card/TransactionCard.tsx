@@ -2,9 +2,12 @@ import { Card, CardContent, Typography } from '@mui/material';
 import { categoriesProperties } from '../../helpers/categoriesProperties';
 import { Categories } from '../../helpers/categories';
 import { useGetTransactionsQuery } from '../../features/transactions/transactionsApiSlice';
+import { selectCurrentUserId } from '../../features/auth/authSlice';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 const TransactionCard = ({ id }: { id: string }) => {
-  const { transaction } = useGetTransactionsQuery(undefined, {
+  const uid = useAppSelector(selectCurrentUserId);
+  const { transaction } = useGetTransactionsQuery(uid, {
     selectFromResult: ({ data }) => ({
       transaction: data?.entities[id],
     }),
