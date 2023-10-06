@@ -16,7 +16,7 @@ import Prefetch from './components/prefetch/Prefetch';
 
 function App() {
   return (
-    <CssVarsProvider theme={theme}>
+    <CssVarsProvider theme={theme} defaultMode="dark">
       <CssBaseline enableColorScheme />
       <Routes>
         <Route path="/" element={<Layout />}>
