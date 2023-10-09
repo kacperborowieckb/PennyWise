@@ -19,7 +19,7 @@ const baseQuery = fetchBaseQuery({
 export const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.status === 403) {
+  if (result?.error?.status === 403 || result.meta?.response?.status === 403) {
     const refreshResult = await baseQuery('/refresh', api, extraOptions);
     if (refreshResult?.data) {
       const { username, _id } = (api.getState() as RootState).auth;
