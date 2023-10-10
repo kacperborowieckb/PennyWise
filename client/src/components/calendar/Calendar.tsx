@@ -19,11 +19,15 @@ const Calendar = () => {
           sx={{ maxWidth: '100%' }}
         />
       </LocalizationProvider>
-      <Button variant="contained" sx={{ margin: '0 auto' }}>
+      <Button variant="contained" sx={{ margin: '0 auto' }} onClick={tooglePlanAPayment}>
         Plan a payment
       </Button>
       {isPlanAPaymentOpen && (
-        <PlanAPaymentDialog isOpen={isPlanAPaymentOpen} toogle={tooglePlanAPayment} />
+        <PlanAPaymentDialog
+          isOpen={isPlanAPaymentOpen}
+          toogle={tooglePlanAPayment}
+          date={dayjs(selectedDate).format('YYYY-MM-DD')}
+        />
       )}
     </Stack>
   );

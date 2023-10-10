@@ -47,14 +47,14 @@ const SpeedActionsDial = () => {
           tooltipTitle={'Add new goal'}
           onClick={toogleAddNewGoal}
         />
-        <AddNewGoalDialog isOpen={isAddNewGoalOpen} toogle={toogleAddNewGoal} />
+        {/* <AddNewGoalDialog isOpen={isAddNewGoalOpen} toogle={toogleAddNewGoal} /> */}
         <SpeedDialAction
           key={'Transfer to goal'}
           icon={<Savings />}
           tooltipTitle={'Transfer to goal'}
           onClick={toogleTransferToGoal}
         />
-        <TransferToGoalDialog isOpen={isTransferToGoalOpen} toogle={toogleTransferToGoal} />
+        {/* <TransferToGoalDialog isOpen={isTransferToGoalOpen} toogle={toogleTransferToGoal} /> */}
         <SpeedDialAction
           key={'Plan a payment'}
           icon={<CalendarMonth />}

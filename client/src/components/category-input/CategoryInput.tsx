@@ -39,7 +39,9 @@ const CategoryInput = ({ errors, control }: AmountInputProps) => {
         )}
       ></Controller>
 
-      <FormHelperText>Required</FormHelperText>
+      <FormHelperText error={!!errors.category}>
+        {errors?.category?.message?.toString()}
+      </FormHelperText>
     </FormControl>
   );
 };

@@ -45,7 +45,7 @@ const PersistLogin = () => {
     return <Navigate to={'/welcome'} state={{ from: location }} replace />;
   }
 
-  return <Navigate to={'/welcome'} state={{ from: location }} replace />;
+  return undefined;
 };
 
 export default PersistLogin;
