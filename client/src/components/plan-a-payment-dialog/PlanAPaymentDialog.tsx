@@ -1,4 +1,10 @@
-const PlanAPaymentDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => void }) => {
+import { DialogProps } from '../../types/DialogProps';
+
+type PlanAPaymentDialogProps = DialogProps & {
+  date?: any;
+};
+
+const PlanAPaymentDialog = ({ isOpen, toogle, date = 'd' }: PlanAPaymentDialogProps) => {
   return <div>PlanAPaymentDialog</div>;
 };
 

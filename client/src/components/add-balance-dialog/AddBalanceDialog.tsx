@@ -13,6 +13,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AmountInput from '../amount-input/AmountInput';
+import { DialogProps } from '../../types/DialogProps';
 
 const addBalanceSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
@@ -20,7 +21,7 @@ const addBalanceSchema = z.object({
 
 export type TAddBalanceSchema = z.infer<typeof addBalanceSchema>;
 
-const AddBalanceDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => void }) => {
+const AddBalanceDialog = ({ isOpen, toogle }: DialogProps) => {
   const {
     register,
     handleSubmit,

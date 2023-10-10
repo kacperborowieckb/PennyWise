@@ -15,6 +15,7 @@ import CategoryInput from '../category-input/CategoryInput';
 import { useSelector } from 'react-redux';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
 import { useAddExpenseMutation } from '../../features/expenses/expensesApiSlice';
+import { DialogProps } from '../../types/DialogProps';
 
 const addExpenseSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
@@ -23,7 +24,7 @@ const addExpenseSchema = z.object({
 
 type TAddExpenseSchema = z.infer<typeof addExpenseSchema>;
 
-const AddExpenseDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => void }) => {
+const AddExpenseDialog = ({ isOpen, toogle }: DialogProps) => {
   const {
     register,
     handleSubmit,
