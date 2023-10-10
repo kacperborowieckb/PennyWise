@@ -14,6 +14,9 @@ import { mockTransactions } from '../../helpers/mockTransactions';
 import { useState } from 'react';
 import MakePlannedPayments from '../make-planned-payments/MakePlannedPayments';
 import noPlannedTransactionsImg from '../../assets/no-planned-transactions-img.svg';
+import { useGetPlannedTransactionsQuery } from '../../features/planned-transactions/plannedTransactionsSlice';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { selectCurrentUserId } from '../../features/auth/authSlice';
 
 const columns: string[] = ['ID', 'Value', 'Category'];
 
@@ -22,8 +25,10 @@ const rows: { [key: string]: any; id: number }[] = [
 ];
 
 const PlannedPayments = () => {
+  const uid = useAppSelector(selectCurrentUserId);
   const [selected, setSelected] = useState<number[]>([]);
   const [selectAll, setSelectAll] = useState(false);
+  const { data, isLoading } = useGetPlannedTransactionsQuery(uid);
 
   const handleSelectRow = (id: number): void => {
     const selectedRows = [...selected];
