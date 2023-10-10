@@ -2,7 +2,7 @@ import { EntityState, createEntityAdapter } from '@reduxjs/toolkit';
 import { api } from '../api/apiSlice';
 import { Categories } from '../../helpers/categories';
 
-type PlannedTransaction = {
+export type PlannedTransaction = {
   plannedFor: string;
   amount: number;
   category: Categories;
@@ -40,6 +40,7 @@ export const plannedTransactionsApiSlice = api.injectEndpoints({
         method: 'POST',
         body: { ...args },
       }),
+      invalidatesTags: [{ type: 'Planned-Transactions', id: 'LIST' }],
     }),
   }),
 });

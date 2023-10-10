@@ -1,5 +1,7 @@
 import {
+  Box,
   Checkbox,
+  CircularProgress,
   Paper,
   Stack,
   Table,
@@ -10,7 +12,6 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { mockTransactions } from '../../helpers/mockTransactions';
 import { useState } from 'react';
 import MakePlannedPayments from '../make-planned-payments/MakePlannedPayments';
 import noPlannedTransactionsImg from '../../assets/no-planned-transactions-img.svg';
@@ -19,10 +20,6 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
 
 const columns: string[] = ['ID', 'Value', 'Category'];
-
-const rows: { [key: string]: any; id: number }[] = [
-  ...mockTransactions.map((transaction, i) => ({ id: i + 1, ...transaction })),
-];
 
 const PlannedPayments = () => {
   const uid = useAppSelector(selectCurrentUserId);
@@ -41,11 +38,11 @@ const PlannedPayments = () => {
   };
 
   const handleSelectAll = () => {
-    if (selected.length === rows.length) {
+    if (selected.length === data?.ids.length) {
       setSelected([]);
       setSelectAll(false);
     } else {
-      setSelected([...rows.map((row) => row.id)]);
+      setSelected([...(data?.ids as number[])]);
       setSelectAll(true);
     }
   };
@@ -60,45 +57,51 @@ const PlannedPayments = () => {
         </Typography>
         {selected.length > 0 && <MakePlannedPayments />}
       </Stack>
-      {rows.length > 0 ? (
-        <TableContainer component={Paper} sx={{ height: 200, flexGrow: 1 }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Checkbox checked={selectAll} onChange={handleSelectAll} />
-                </TableCell>
-                {columns.map((column, i) => (
-                  <TableCell key={i}>{column}</TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => {
-                const isSelcted = checkIfSelected(row.id);
-                const handleClick = () => handleSelectRow(row.id);
-                return (
-                  <TableRow key={row.id} hover onClick={handleClick} selected={isSelcted}>
-                    <TableCell>
-                      <Checkbox checked={isSelcted} onChange={handleClick} />
-                    </TableCell>
-                    {Object.keys(row).map((name, i) => (
-                      <TableCell key={i}>{row[name]}</TableCell>
-                    ))}
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      ) : (
-        <Stack flex={1}>
-          <img src={noPlannedTransactionsImg} alt="No planned transactions" height={150} />
-          <Typography component={'h3'} variant="h6" mt={2} align="center">
-            No planned transactions!
-          </Typography>
-        </Stack>
+      {isLoading && (
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+          <CircularProgress />
+        </Box>
       )}
+      {!isLoading &&
+        (data?.ids.length ? (
+          <TableContainer component={Paper} sx={{ height: 200, flexGrow: 1 }}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <Checkbox checked={selectAll} onChange={handleSelectAll} />
+                  </TableCell>
+                  {columns.map((column, i) => (
+                    <TableCell key={i}>{column}</TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.ids.map((id, i) => {
+                  const isSelcted = checkIfSelected(id as number);
+                  const handleClick = () => handleSelectRow(id as number);
+                  return (
+                    <TableRow key={id} hover onClick={handleClick} selected={isSelcted}>
+                      <TableCell>
+                        <Checkbox checked={isSelcted} onChange={handleClick} />
+                      </TableCell>
+                      <TableCell>{i + 1}</TableCell>
+                      <TableCell>{data.entities[id]?.amount}</TableCell>
+                      <TableCell>{data.entities[id]?.category}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <Stack flex={1}>
+            <img src={noPlannedTransactionsImg} alt="No planned transactions" height={150} />
+            <Typography component={'h3'} variant="h6" mt={2} align="center">
+              No planned transactions!
+            </Typography>
+          </Stack>
+        ))}
     </Stack>
   );
 };
