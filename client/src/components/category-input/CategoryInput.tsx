@@ -1,15 +1,14 @@
 import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
 import { Categories } from '../../helpers/categories';
 import { categoriesProperties } from '../../helpers/categoriesProperties';
-import { Control, Controller, FieldErrors, UseFormRegister } from 'react-hook-form';
+import { Control, Controller } from 'react-hook-form';
+import { InputProps } from '../../types/inputProps';
 
-type AmountInputProps = {
-  register: UseFormRegister<any>;
-  errors: FieldErrors<any>;
+type CategoryInputProps = InputProps & {
   control: Control<any>;
 };
 
-const CategoryInput = ({ errors, control }: AmountInputProps) => {
+const CategoryInput = ({ errors, control }: CategoryInputProps) => {
   return (
     <FormControl required sx={{ m: 1, minWidth: 220 }}>
       <InputLabel id="category-input-required-label">Category</InputLabel>

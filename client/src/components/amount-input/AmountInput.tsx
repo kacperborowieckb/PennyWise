@@ -5,14 +5,9 @@ import {
   InputLabel,
   OutlinedInput,
 } from '@mui/material';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { InputProps } from '../../types/inputProps';
 
-type AmountInputProps = {
-  register: UseFormRegister<any>;
-  errors: FieldErrors<any>;
-};
-
-const AmountInput = ({ register, errors }: AmountInputProps) => {
+const AmountInput = ({ register, errors }: InputProps) => {
   return (
     <FormControl required sx={{ m: 1, minWidth: 220 }}>
       <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>

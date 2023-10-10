@@ -7,9 +7,12 @@ type PlannedTransaction = {
   amount: number;
   category: Categories;
   createdAt: Date;
+  _id: string;
 };
 
-const plannedTransactionsAdapter = createEntityAdapter<PlannedTransaction>({});
+const plannedTransactionsAdapter = createEntityAdapter<PlannedTransaction>({
+  selectId: (transaction) => transaction._id,
+});
 
 const initialState = plannedTransactionsAdapter.getInitialState({});
 
@@ -31,7 +34,15 @@ export const plannedTransactionsApiSlice = api.injectEndpoints({
             ]
           : [{ type: 'Planned-Transactions', id: 'LIST' }],
     }),
+    addPlannedTransaction: builder.mutation<void, Partial<PlannedTransaction> & { uid: string }>({
+      query: (args) => ({
+        url: '/planned-transactions',
+        method: 'POST',
+        body: { ...args },
+      }),
+    }),
   }),
 });
 
-export const { useGetPlannedTransactionsQuery } = plannedTransactionsApiSlice;
+export const { useGetPlannedTransactionsQuery, useAddPlannedTransactionMutation } =
+  plannedTransactionsApiSlice;

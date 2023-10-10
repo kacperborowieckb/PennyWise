@@ -23,11 +23,7 @@ const Calendar = () => {
         Plan a payment
       </Button>
       {isPlanAPaymentOpen && (
-        <PlanAPaymentDialog
-          isOpen={isPlanAPaymentOpen}
-          toogle={tooglePlanAPayment}
-          date={dayjs(selectedDate).format('YYYY-MM-DD')}
-        />
+        <PlanAPaymentDialog isOpen={isPlanAPaymentOpen} toogle={tooglePlanAPayment} />
       )}
     </Stack>
   );

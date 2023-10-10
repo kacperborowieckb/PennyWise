@@ -1,26 +1,27 @@
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, DateValidationError, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
+import dayjs from 'dayjs';
+import { Control, Controller } from 'react-hook-form';
 
-const DateInput = ({ defaultValue }: { defaultValue: string }) => {
-  const [date, setDate] = useState<string>(defaultValue);
+type DateInputProps = {
+  control: Control<any>;
+};
 
-  const handleDateChange = (date: Dayjs | null) => {
-    if (date) {
-      const formatedDate = date.format('YYYY-MM-DD');
-      setDate(formatedDate);
-    }
-  };
-
+const DateInput = ({ control }: DateInputProps) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
-        sx={{ m: 1 }}
-        label="Pick a date"
-        value={dayjs(date)}
-        onChange={(val) => handleDateChange(val)}
-      />
+      <Controller
+        name="plannedFor"
+        control={control}
+        render={({ field: { value, onChange } }) => (
+          <DatePicker
+            sx={{ m: 1 }}
+            label="Pick a date"
+            value={value || dayjs()}
+            onChange={onChange}
+          />
+        )}
+      ></Controller>
     </LocalizationProvider>
   );
 };

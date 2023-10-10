@@ -14,7 +14,10 @@ import { Categories } from '../../helpers/categories';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import DateInput from '../date-input/DateInput';
-import dayjs from 'dayjs';
+import { useAddPlannedTransactionMutation } from '../../features/planned-transactions/plannedTransactionsSlice';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { selectCurrentUserId } from '../../features/auth/authSlice';
+import dayjs, { Dayjs } from 'dayjs';
 
 type PlanAPaymentDialogProps = DialogProps & {
   date?: any;
@@ -23,15 +26,13 @@ type PlanAPaymentDialogProps = DialogProps & {
 const addExpenseSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
   category: z.nativeEnum(Categories),
+  plannedFor: z.custom((val) => dayjs(val as Dayjs).isValid()),
 });
 
-type TAddExpenseSchema = z.infer<typeof addExpenseSchema>;
+type TPlanAPaymentSchema = z.infer<typeof addExpenseSchema>;
 
-const PlanAPaymentDialog = ({
-  isOpen,
-  toogle,
-  date = dayjs().format('YYYY-MM-DD'),
-}: PlanAPaymentDialogProps) => {
+const PlanAPaymentDialog = ({ isOpen, toogle }: PlanAPaymentDialogProps) => {
+  const uid = useAppSelector(selectCurrentUserId);
   const {
     register,
     handleSubmit,
@@ -39,11 +40,17 @@ const PlanAPaymentDialog = ({
     setError,
     control,
     formState: { errors },
-  } = useForm<TAddExpenseSchema>({ resolver: zodResolver(addExpenseSchema) });
-  const isLoading = false;
-  const handlePlanAPayment = async () => {
+  } = useForm<TPlanAPaymentSchema>({ resolver: zodResolver(addExpenseSchema) });
+  const [addTransaction, { isLoading }] = useAddPlannedTransactionMutation();
+
+  const handlePlanATransaction = async ({ amount, category, plannedFor }: TPlanAPaymentSchema) => {
     try {
-      // await action
+      await addTransaction({
+        amount,
+        category,
+        plannedFor: dayjs(plannedFor).format('YYYY-MM-DD'),
+        uid,
+      }).unwrap();
       reset();
       toogle();
     } catch (err) {
@@ -58,11 +65,11 @@ const PlanAPaymentDialog = ({
       open={isOpen}
       onClose={toogle}
       component={'form'}
-      onSubmit={handleSubmit(handlePlanAPayment)}
+      onSubmit={handleSubmit(handlePlanATransaction)}
     >
       <DialogTitle>Plan a payment</DialogTitle>
       <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-        <DateInput defaultValue={date} />
+        <DateInput control={control} />
         <CategoryInput register={register} errors={errors} control={control} />
         <AmountInput register={register} errors={errors} />
       </DialogContent>
