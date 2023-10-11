@@ -1,14 +1,18 @@
 import { Button, Stack } from '@mui/material';
 import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs, { Dayjs } from 'dayjs';
-import { useState } from 'react';
+import { Dayjs } from 'dayjs';
+import { Dispatch, SetStateAction } from 'react';
 import PlanAPaymentDialog from '../plan-a-payment-dialog/PlanAPaymentDialog';
-import { useToogle } from '../../hooks/useToogle';
+import { useToggle } from '../../hooks/useToggle';
 
-const Calendar = () => {
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(dayjs());
-  const [isPlanAPaymentOpen, tooglePlanAPayment] = useToogle(false);
+type CalendarProps = {
+  selectedDate: Dayjs | null;
+  setSelectedDate: Dispatch<SetStateAction<Dayjs | null>>;
+};
+
+const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
+  const [isPlanAPaymentOpen, TogglePlanAPayment] = useToggle(false);
 
   return (
     <Stack>
@@ -19,11 +23,11 @@ const Calendar = () => {
           sx={{ maxWidth: '100%' }}
         />
       </LocalizationProvider>
-      <Button variant="contained" sx={{ margin: '0 auto' }} onClick={tooglePlanAPayment}>
+      <Button variant="contained" sx={{ margin: '0 auto' }} onClick={TogglePlanAPayment}>
         Plan a payment
       </Button>
       {isPlanAPaymentOpen && (
-        <PlanAPaymentDialog isOpen={isPlanAPaymentOpen} toogle={tooglePlanAPayment} />
+        <PlanAPaymentDialog isOpen={isPlanAPaymentOpen} Toggle={TogglePlanAPayment} />
       )}
     </Stack>
   );

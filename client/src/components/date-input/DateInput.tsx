@@ -1,4 +1,4 @@
-import { DatePicker, DateValidationError, LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { Control, Controller } from 'react-hook-form';

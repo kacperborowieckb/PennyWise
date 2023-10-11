@@ -18,16 +18,20 @@ import noPlannedTransactionsImg from '../../assets/no-planned-transactions-img.s
 import { useGetPlannedTransactionsQuery } from '../../features/planned-transactions/plannedTransactionsSlice';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
+import { Dayjs } from 'dayjs';
+import { filterTransactionsForCurrentDate } from '../../utils/filterTransactionsForCurrentDate';
 
 const columns: string[] = ['ID', 'Value', 'Category'];
 
-const PlannedPayments = () => {
+const PlannedPayments = ({ selectedDate }: { selectedDate: Dayjs | null }) => {
   const uid = useAppSelector(selectCurrentUserId);
-  const [selected, setSelected] = useState<number[]>([]);
+  const [selected, setSelected] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState(false);
-  const { data, isLoading } = useGetPlannedTransactionsQuery(uid);
+  const { data } = useGetPlannedTransactionsQuery(uid, {
+    selectFromResult: ({ data }) => filterTransactionsForCurrentDate({ data, selectedDate }),
+  });
 
-  const handleSelectRow = (id: number): void => {
+  const handleSelectRow = (id: string): void => {
     const selectedRows = [...selected];
     if (selectedRows.indexOf(id) !== -1) {
       selectedRows.splice(selectedRows.indexOf(id), 1);
@@ -42,12 +46,12 @@ const PlannedPayments = () => {
       setSelected([]);
       setSelectAll(false);
     } else {
-      setSelected([...(data?.ids as number[])]);
+      setSelected([...(data?.ids as string[])]);
       setSelectAll(true);
     }
   };
 
-  const checkIfSelected = (id: number): boolean => selected.indexOf(id) !== -1;
+  const checkIfSelected = (id: string): boolean => selected.indexOf(id) !== -1;
 
   return (
     <Stack flex={1} spacing={2}>
@@ -57,12 +61,12 @@ const PlannedPayments = () => {
         </Typography>
         {selected.length > 0 && <MakePlannedPayments />}
       </Stack>
-      {isLoading && (
+      {!data && (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
           <CircularProgress />
         </Box>
       )}
-      {!isLoading &&
+      {data?.ids &&
         (data?.ids.length ? (
           <TableContainer component={Paper} sx={{ height: 200, flexGrow: 1 }}>
             <Table>
@@ -78,18 +82,20 @@ const PlannedPayments = () => {
               </TableHead>
               <TableBody>
                 {data.ids.map((id, i) => {
-                  const isSelcted = checkIfSelected(id as number);
-                  const handleClick = () => handleSelectRow(id as number);
-                  return (
-                    <TableRow key={id} hover onClick={handleClick} selected={isSelcted}>
-                      <TableCell>
-                        <Checkbox checked={isSelcted} onChange={handleClick} />
-                      </TableCell>
-                      <TableCell>{i + 1}</TableCell>
-                      <TableCell>{data.entities[id]?.amount}</TableCell>
-                      <TableCell>{data.entities[id]?.category}</TableCell>
-                    </TableRow>
-                  );
+                  const isSelected = checkIfSelected(id as string);
+                  const handleClick = () => handleSelectRow(id as string);
+                  if (data.entities) {
+                    return (
+                      <TableRow key={id} hover onClick={handleClick} selected={isSelected}>
+                        <TableCell>
+                          <Checkbox checked={isSelected} onChange={handleClick} />
+                        </TableCell>
+                        <TableCell>{i + 1}</TableCell>
+                        <TableCell>{data?.entities[id]?.amount}</TableCell>
+                        <TableCell>{data?.entities[id]?.category}</TableCell>
+                      </TableRow>
+                    );
+                  }
                 })}
               </TableBody>
             </Table>

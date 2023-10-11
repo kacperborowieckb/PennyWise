@@ -1,4 +1,4 @@
-const AddNewGoalDialog = ({ isOpen, toogle }: { isOpen: boolean; toogle: () => void }) => {
+const AddNewGoalDialog = ({ isOpen, Toggle }: { isOpen: boolean; Toggle: () => void }) => {
   return <div>AddNewGoalDialog</div>;
 };
 
