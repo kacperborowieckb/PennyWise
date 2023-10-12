@@ -43,7 +43,7 @@ const AddExpenseDialog = ({ isOpen, Toggle }: DialogProps) => {
       Toggle();
     } catch (err) {
       setError('root.serverError', {
-        message: 'Some unkown error happend.',
+        message: 'Some unknown error happened.',
       });
     }
   };

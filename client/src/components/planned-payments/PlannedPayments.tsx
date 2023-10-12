@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MakePlannedPayments from '../make-planned-payments/MakePlannedPayments';
 import noPlannedTransactionsImg from '../../assets/no-planned-transactions-img.svg';
 import { useGetPlannedTransactionsQuery } from '../../features/planned-transactions/plannedTransactionsSlice';
@@ -26,7 +26,7 @@ const columns: string[] = ['ID', 'Value', 'Category'];
 const PlannedPayments = ({ selectedDate }: { selectedDate: Dayjs | null }) => {
   const uid = useAppSelector(selectCurrentUserId);
   const [selected, setSelected] = useState<string[]>([]);
-  const [selectAll, setSelectAll] = useState(false);
+  const [selectAll, setSelectAll] = useState<boolean>(false);
   const { data } = useGetPlannedTransactionsQuery(uid, {
     selectFromResult: ({ data }) => filterTransactionsForCurrentDate({ data, selectedDate }),
   });
@@ -53,13 +53,29 @@ const PlannedPayments = ({ selectedDate }: { selectedDate: Dayjs | null }) => {
 
   const checkIfSelected = (id: string): boolean => selected.indexOf(id) !== -1;
 
+  const resetInputs = () => {
+    setSelected([]);
+    setSelectAll(false);
+  };
+
+  useEffect(() => {
+    resetInputs();
+  }, [selectedDate]);
+
   return (
     <Stack flex={1} spacing={2}>
       <Stack direction={'row'} height={32}>
         <Typography component={'h3'} variant="h6" flexGrow={1}>
           Planned payments:
         </Typography>
-        {selected.length > 0 && <MakePlannedPayments />}
+        {selected.length > 0 && (
+          <MakePlannedPayments
+            uid={uid}
+            selected={selected}
+            data={data}
+            resetInputs={resetInputs}
+          />
+        )}
       </Stack>
       {!data && (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flex: 1 }}>
