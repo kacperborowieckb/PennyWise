@@ -1,6 +1,5 @@
 import { CircularProgress, Stack, Typography } from '@mui/material';
 import { PieChart } from '@mui/x-charts';
-import { categoriesTotalExpenses } from '../../helpers/mockCategories';
 import { categoriesProperties } from '../../helpers/categoriesProperties';
 import noExpensesImg from '../../assets/no-expenses-img.svg';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -13,8 +12,8 @@ const ExpensesChart = () => {
   const { data: expenses } = useGetExpensesQuery(uid);
 
   return (
-    <Stack alignItems={'center'} spacing={2}>
-      {categoriesTotalExpenses.length > 0 ? (
+    <Stack alignItems={'center'} spacing={2} pb={2}>
+      {expenses?.totalExpenses !== 0 ? (
         <>
           {expenses?.expenses ? (
             <PieChart

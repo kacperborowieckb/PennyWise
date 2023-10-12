@@ -1,4 +1,4 @@
-import { Box, Paper, Stack, Typography } from '@mui/material';
+import { Box, CircularProgress, Paper, Stack, Typography } from '@mui/material';
 import TransactionCard from '../transaction-card/TransactionCard';
 import noTransactionsMade from '../../assets/no-transactions-made-img.svg';
 import { useGetTransactionsQuery } from '../../features/transactions/transactionsApiSlice';
@@ -31,6 +31,9 @@ const LastTransactions = () => {
         {!isLoading ? (
           data?.ids.slice(0, 6).map((id) => <TransactionCard id={id as string} key={id} />)
         ) : (
+          <CircularProgress />
+        )}
+        {data?.ids.length === 0 && (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} flex={1}>
             <img src={noTransactionsMade} alt="No planned transactions" height={100} />
             <Typography component={'h3'} variant="h6" align="center">
