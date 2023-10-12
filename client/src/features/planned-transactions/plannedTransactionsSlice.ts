@@ -42,8 +42,19 @@ export const plannedTransactionsApiSlice = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Planned-Transactions', id: 'LIST' }],
     }),
+    deletePlannedTransactions: builder.mutation<void, { uid: string; ids: string[] }>({
+      query: (args) => ({
+        url: '/planned-transactions',
+        method: 'DELETE',
+        body: { ...args },
+      }),
+      invalidatesTags: [{ type: 'Planned-Transactions', id: 'LIST' }],
+    }),
   }),
 });
 
-export const { useGetPlannedTransactionsQuery, useAddPlannedTransactionMutation } =
-  plannedTransactionsApiSlice;
+export const {
+  useGetPlannedTransactionsQuery,
+  useAddPlannedTransactionMutation,
+  useDeletePlannedTransactionsMutation,
+} = plannedTransactionsApiSlice;

@@ -1,6 +1,9 @@
 import { Button, CircularProgress } from '@mui/material';
 import { EntityId } from '@reduxjs/toolkit';
-import { PlannedTransaction } from '../../features/planned-transactions/plannedTransactionsSlice';
+import {
+  PlannedTransaction,
+  useDeletePlannedTransactionsMutation,
+} from '../../features/planned-transactions/plannedTransactionsSlice';
 import { useAddExpenseMutation } from '../../features/expenses/expensesApiSlice';
 
 type MakePlannedPaymentsButtonProps = {
@@ -23,6 +26,7 @@ const MakePlannedPayments = ({
   resetInputs,
 }: MakePlannedPaymentsButtonProps) => {
   const [addExpense, { isLoading }] = useAddExpenseMutation();
+  const [deletePlannedTransaction] = useDeletePlannedTransactionsMutation();
 
   const makePlannedPayments = async () => {
     const payments: Promise<void>[] = [];
@@ -35,7 +39,12 @@ const MakePlannedPayments = ({
         }).unwrap()
       )
     );
-    await Promise.all(payments);
+    try {
+      await Promise.all(payments);
+      await deletePlannedTransaction({ uid, ids: selected });
+    } catch (error) {
+      console.error(error);
+    }
     resetInputs();
   };
 
@@ -48,7 +57,6 @@ const MakePlannedPayments = ({
           Make
         </Button>
       )}
-      ;
     </>
   );
 };
