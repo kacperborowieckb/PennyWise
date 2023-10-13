@@ -1,5 +1,6 @@
 import { Box, Paper, Typography } from '@mui/material';
 import GoalProgress from '../goal-progress/GoalProgress';
+import GoalMenu from '../goal-menu/GoalMenu';
 
 const GoalCard = () => {
   return (
@@ -14,9 +15,12 @@ const GoalCard = () => {
       }}
       elevation={4}
     >
-      <Typography component={'h3'} variant="h5" sx={{ fontWeight: '700' }}>
-        Goal Title
-      </Typography>
+      <Box sx={{ display: 'flex' }}>
+        <Typography component={'h3'} variant="h5" sx={{ fontWeight: '700', flexGrow: 1 }}>
+          Goal Title
+        </Typography>
+        <GoalMenu />
+      </Box>
       <Box
         sx={{
           display: 'flex',

@@ -28,19 +28,19 @@ const SpeedActionsDial = () => {
         icon={<SpeedDialIcon />}
       >
         <SpeedDialAction
+          key={'Add balance'}
+          icon={<Wallet />}
+          tooltipTitle={'Add balance'}
+          onClick={ToggleAddBalance}
+        />
+        <AddBalanceDialog isOpen={isAddBalanceOpen} Toggle={ToggleAddBalance} />
+        <SpeedDialAction
           key={'Add expense'}
           icon={<Paid />}
           tooltipTitle={'Add expense'}
           onClick={ToggleAddExpense}
         />
         <AddExpenseDialog isOpen={isAddExpenseOpen} Toggle={ToggleAddExpense} />
-        <SpeedDialAction
-          key={'Add balance'}
-          icon={<Wallet />}
-          tooltipTitle={'Add balace'}
-          onClick={ToggleAddBalance}
-        />
-        <AddBalanceDialog isOpen={isAddBalanceOpen} Toggle={ToggleAddBalance} />
         <SpeedDialAction
           key={'Add new goal'}
           icon={<Flag />}
