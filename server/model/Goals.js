@@ -9,8 +9,10 @@ const goalsSchema = new Schema({
   goals: [
     {
       name: { type: String, required: true },
-      amount: { type: String, required: true },
+      amount: { type: String, required: true, default: 0 },
       goal: { type: String, required: true },
     },
   ],
 });
+
+module.exports = mongoose.model('Goals', goalsSchema);

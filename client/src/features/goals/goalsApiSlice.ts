@@ -13,7 +13,7 @@ const goalsAdapter = createEntityAdapter<Goals>({
 
 const initialState = goalsAdapter.getInitialState({});
 
-const goalsApiSlice = api.injectEndpoints({
+export const goalsApiSlice = api.injectEndpoints({
   endpoints: (builder) => ({
     getGoals: builder.query<EntityState<Goals>, string>({
       query: (uid) => ({
@@ -31,10 +31,26 @@ const goalsApiSlice = api.injectEndpoints({
             ]
           : [{ type: 'Goals', id: 'LIST' }],
     }),
-    transferToGoal: builder.mutation<void, Partial<Goals>>({
+    addNewGoal: builder.mutation<void, Partial<Goals> & { uid: string }>({
       query: (args) => ({
-        url: '/balance',
+        url: '/goals',
         method: 'POST',
+        body: { ...args },
+      }),
+      invalidatesTags: [{ type: 'Goals', id: 'LIST' }],
+    }),
+    transferToGoal: builder.mutation<void, Partial<Goals> & { uid: string }>({
+      query: (args) => ({
+        url: '/goals',
+        method: 'PATCH',
+        body: { ...args },
+      }),
+      invalidatesTags: [{ type: 'Goals', id: 'LIST' }],
+    }),
+    deleteGoal: builder.mutation<void, Partial<Goals> & { uid: string }>({
+      query: (args) => ({
+        url: '/goals',
+        method: 'DELETE',
         body: { ...args },
       }),
       invalidatesTags: [{ type: 'Goals', id: 'LIST' }],
@@ -42,4 +58,9 @@ const goalsApiSlice = api.injectEndpoints({
   }),
 });
 
-export const { useGetGoalsQuery, useTransferToGoalMutation } = goalsApiSlice;
+export const {
+  useGetGoalsQuery,
+  useTransferToGoalMutation,
+  useAddNewGoalMutation,
+  useDeleteGoalMutation,
+} = goalsApiSlice;

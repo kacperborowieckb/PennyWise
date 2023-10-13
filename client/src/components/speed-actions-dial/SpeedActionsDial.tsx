@@ -47,7 +47,7 @@ const SpeedActionsDial = () => {
           tooltipTitle={'Add new goal'}
           onClick={toggleAddNewGoal}
         />
-        {/* <AddNewGoalDialog isOpen={isAddNewGoalOpen} toggle={toggleAddNewGoal} /> */}
+        <AddNewGoalDialog isOpen={isAddNewGoalOpen} toggle={toggleAddNewGoal} />
         <SpeedDialAction
           key={'Transfer to goal'}
           icon={<Savings />}

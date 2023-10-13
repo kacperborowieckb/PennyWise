@@ -5,6 +5,7 @@ import { store } from '../../app/store';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
 import { plannedTransactionsApiSlice } from '../../features/planned-transactions/plannedTransactionsSlice';
+import { goalsApiSlice } from '../../features/goals/goalsApiSlice';
 
 const Prefetch = () => {
   const uid = useAppSelector(selectCurrentUserId);
@@ -13,6 +14,7 @@ const Prefetch = () => {
     store.dispatch(
       plannedTransactionsApiSlice.util.prefetch('getPlannedTransactions', uid, { force: true })
     );
+    store.dispatch(goalsApiSlice.util.prefetch('getGoals', uid, { force: true }));
   }, []);
 
   return <Outlet />;

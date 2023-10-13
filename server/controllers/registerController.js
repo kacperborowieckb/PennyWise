@@ -27,9 +27,11 @@ const handleNewUser = async (req, res) => {
     await Wallet.create({
       uid: _id.toString(),
     });
+    console.log('1.');
     await Goals.create({
       uid: _id.toString(),
     });
+    console.log('2.');
     console.log(result);
 
     res.status(201).json({ success: `New user ${username} created!` });
