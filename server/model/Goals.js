@@ -6,8 +6,7 @@ const goalsSchema = new Schema({
     type: String,
     required: true,
   },
-  goals: [String],
-  goalsProperties: [
+  goals: [
     {
       name: { type: String, required: true },
       amount: { type: String, required: true },
