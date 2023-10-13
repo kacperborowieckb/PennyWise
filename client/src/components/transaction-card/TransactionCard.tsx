@@ -16,7 +16,15 @@ const TransactionCard = ({ id }: { id: string }) => {
 
   if (transaction) {
     content = (
-      <Card variant="outlined" sx={{ minWidth: 180, cursor: 'pointer' }}>
+      <Card
+        variant="outlined"
+        sx={{
+          minWidth: 180,
+          cursor: 'pointer',
+          ':hover': { transform: 'scale(1.03)' },
+          transition: 'transform 0.3s ease',
+        }}
+      >
         <CardContent
           sx={{
             display: 'flex',
