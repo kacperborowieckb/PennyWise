@@ -1,4 +1,5 @@
 const User = require('../model/User');
+const Goals = require('../model/Goals');
 const bcrypt = require('bcrypt');
 const Wallet = require('../model/Wallet');
 const ObjectId = require('mongodb').ObjectId;
@@ -24,6 +25,9 @@ const handleNewUser = async (req, res) => {
       password: hashedPwd,
     });
     await Wallet.create({
+      uid: _id.toString(),
+    });
+    await Goals.create({
       uid: _id.toString(),
     });
     console.log(result);
