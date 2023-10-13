@@ -24,7 +24,7 @@ const addExpenseSchema = z.object({
 
 type TAddExpenseSchema = z.infer<typeof addExpenseSchema>;
 
-const AddExpenseDialog = ({ isOpen, Toggle }: DialogProps) => {
+const AddExpenseDialog = ({ isOpen, toggle }: DialogProps) => {
   const {
     register,
     handleSubmit,
@@ -40,7 +40,7 @@ const AddExpenseDialog = ({ isOpen, Toggle }: DialogProps) => {
     try {
       await addExpense({ uid, amount, category }).unwrap();
       reset();
-      Toggle();
+      toggle();
     } catch (err) {
       setError('root.serverError', {
         message: 'Some unknown error happened.',
@@ -51,7 +51,7 @@ const AddExpenseDialog = ({ isOpen, Toggle }: DialogProps) => {
   return (
     <Dialog
       open={isOpen}
-      onClose={Toggle}
+      onClose={toggle}
       component={'form'}
       onSubmit={handleSubmit(handleAddExpense)}
     >
@@ -61,7 +61,7 @@ const AddExpenseDialog = ({ isOpen, Toggle }: DialogProps) => {
         <AmountInput register={register} errors={errors} />
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
-        <Button onClick={Toggle}>Cancel</Button>
+        <Button onClick={toggle}>Cancel</Button>
         <Button type="submit" variant="contained">
           {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>

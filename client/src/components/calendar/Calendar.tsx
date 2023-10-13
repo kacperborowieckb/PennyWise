@@ -4,7 +4,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Dayjs } from 'dayjs';
 import { Dispatch, SetStateAction } from 'react';
 import PlanAPaymentDialog from '../plan-a-payment-dialog/PlanAPaymentDialog';
-import { useToggle } from '../../hooks/useToggle';
+import { usetoggle } from '../../hooks/usetoggle';
 
 type CalendarProps = {
   selectedDate: Dayjs | null;
@@ -12,7 +12,7 @@ type CalendarProps = {
 };
 
 const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
-  const [isPlanAPaymentOpen, TogglePlanAPayment] = useToggle(false);
+  const [isPlanAPaymentOpen, togglePlanAPayment] = usetoggle(false);
 
   return (
     <Stack>
@@ -23,11 +23,11 @@ const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
           sx={{ maxWidth: '100%' }}
         />
       </LocalizationProvider>
-      <Button variant="contained" sx={{ margin: '0 auto' }} onClick={TogglePlanAPayment}>
+      <Button variant="contained" sx={{ margin: '0 auto' }} onClick={togglePlanAPayment}>
         Plan a payment
       </Button>
       {isPlanAPaymentOpen && (
-        <PlanAPaymentDialog isOpen={isPlanAPaymentOpen} Toggle={TogglePlanAPayment} />
+        <PlanAPaymentDialog isOpen={isPlanAPaymentOpen} toggle={togglePlanAPayment} />
       )}
     </Stack>
   );

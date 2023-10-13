@@ -1,5 +1,5 @@
 import { CompareArrows, Delete, MoreVert, Payment } from '@mui/icons-material';
-import { IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
+import { Divider, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import { useState } from 'react';
 
 const GoalMenu = () => {
@@ -28,6 +28,7 @@ const GoalMenu = () => {
           </ListItemIcon>
           Withdraw
         </MenuItem>
+        <Divider />
         <MenuItem>
           <ListItemIcon>
             <Delete />

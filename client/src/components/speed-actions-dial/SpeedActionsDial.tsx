@@ -1,6 +1,6 @@
 import { CalendarMonth, Flag, Paid, Savings, Wallet } from '@mui/icons-material';
 import { Box, SpeedDial, SpeedDialAction, SpeedDialIcon } from '@mui/material';
-import { useToggle } from '../../hooks/useToggle';
+import { usetoggle } from '../../hooks/usetoggle';
 import AddBalanceDialog from '../add-balance-dialog/AddBalanceDialog';
 import AddExpenseDialog from '../add-expense-dialog/AddExpenseDialog';
 import AddNewGoalDialog from '../add-new-goal-dialog/AddNewGoalDialog';
@@ -8,11 +8,11 @@ import TransferToGoalDialog from '../transfer-to-goal-dialog/TransferToGoalDialo
 import PlanAPaymentDialog from '../plan-a-payment-dialog/PlanAPaymentDialog';
 
 const SpeedActionsDial = () => {
-  const [isAddExpenseOpen, ToggleAddExpense] = useToggle(false);
-  const [isAddBalanceOpen, ToggleAddBalance] = useToggle(false);
-  const [isAddNewGoalOpen, ToggleAddNewGoal] = useToggle(false);
-  const [isTransferToGoalOpen, ToggleTransferToGoal] = useToggle(false);
-  const [isPlanAPaymentOpen, TogglePlanAPayment] = useToggle(false);
+  const [isAddExpenseOpen, toggleAddExpense] = usetoggle(false);
+  const [isAddBalanceOpen, toggleAddBalance] = usetoggle(false);
+  const [isAddNewGoalOpen, toggleAddNewGoal] = usetoggle(false);
+  const [isTransferToGoalOpen, toggleTransferToGoal] = usetoggle(false);
+  const [isPlanAPaymentOpen, togglePlanAPayment] = usetoggle(false);
 
   return (
     <Box
@@ -31,37 +31,37 @@ const SpeedActionsDial = () => {
           key={'Add balance'}
           icon={<Wallet />}
           tooltipTitle={'Add balance'}
-          onClick={ToggleAddBalance}
+          onClick={toggleAddBalance}
         />
-        <AddBalanceDialog isOpen={isAddBalanceOpen} Toggle={ToggleAddBalance} />
+        <AddBalanceDialog isOpen={isAddBalanceOpen} toggle={toggleAddBalance} />
         <SpeedDialAction
           key={'Add expense'}
           icon={<Paid />}
           tooltipTitle={'Add expense'}
-          onClick={ToggleAddExpense}
+          onClick={toggleAddExpense}
         />
-        <AddExpenseDialog isOpen={isAddExpenseOpen} Toggle={ToggleAddExpense} />
+        <AddExpenseDialog isOpen={isAddExpenseOpen} toggle={toggleAddExpense} />
         <SpeedDialAction
           key={'Add new goal'}
           icon={<Flag />}
           tooltipTitle={'Add new goal'}
-          onClick={ToggleAddNewGoal}
+          onClick={toggleAddNewGoal}
         />
-        {/* <AddNewGoalDialog isOpen={isAddNewGoalOpen} Toggle={ToggleAddNewGoal} /> */}
+        {/* <AddNewGoalDialog isOpen={isAddNewGoalOpen} toggle={toggleAddNewGoal} /> */}
         <SpeedDialAction
           key={'Transfer to goal'}
           icon={<Savings />}
           tooltipTitle={'Transfer to goal'}
-          onClick={ToggleTransferToGoal}
+          onClick={toggleTransferToGoal}
         />
-        {/* <TransferToGoalDialog isOpen={isTransferToGoalOpen} Toggle={ToggleTransferToGoal} /> */}
+        {/* <TransferToGoalDialog isOpen={isTransferToGoalOpen} toggle={toggleTransferToGoal} /> */}
         <SpeedDialAction
           key={'Plan a payment'}
           icon={<CalendarMonth />}
           tooltipTitle={'Plan a payment'}
-          onClick={TogglePlanAPayment}
+          onClick={togglePlanAPayment}
         />
-        <PlanAPaymentDialog isOpen={isPlanAPaymentOpen} Toggle={TogglePlanAPayment} />
+        <PlanAPaymentDialog isOpen={isPlanAPaymentOpen} toggle={togglePlanAPayment} />
       </SpeedDial>
     </Box>
   );

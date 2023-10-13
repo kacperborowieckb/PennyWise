@@ -31,7 +31,7 @@ const addExpenseSchema = z.object({
 
 type TPlanAPaymentSchema = z.infer<typeof addExpenseSchema>;
 
-const PlanAPaymentDialog = ({ isOpen, Toggle }: PlanAPaymentDialogProps) => {
+const PlanAPaymentDialog = ({ isOpen, toggle }: PlanAPaymentDialogProps) => {
   const uid = useAppSelector(selectCurrentUserId);
   const {
     register,
@@ -52,7 +52,7 @@ const PlanAPaymentDialog = ({ isOpen, Toggle }: PlanAPaymentDialogProps) => {
         uid,
       }).unwrap();
       reset();
-      Toggle();
+      toggle();
     } catch (err) {
       setError('root.serverError', {
         message: 'Some unkown error happend.',
@@ -63,7 +63,7 @@ const PlanAPaymentDialog = ({ isOpen, Toggle }: PlanAPaymentDialogProps) => {
   return (
     <Dialog
       open={isOpen}
-      onClose={Toggle}
+      onClose={toggle}
       component={'form'}
       onSubmit={handleSubmit(handlePlanATransaction)}
     >
@@ -74,7 +74,7 @@ const PlanAPaymentDialog = ({ isOpen, Toggle }: PlanAPaymentDialogProps) => {
         <AmountInput register={register} errors={errors} />
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
-        <Button onClick={Toggle}>Cancel</Button>
+        <Button onClick={toggle}>Cancel</Button>
         <Button type="submit" variant="contained">
           {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>

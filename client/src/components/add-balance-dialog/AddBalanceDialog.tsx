@@ -21,7 +21,7 @@ const addBalanceSchema = z.object({
 
 export type TAddBalanceSchema = z.infer<typeof addBalanceSchema>;
 
-const AddBalanceDialog = ({ isOpen, Toggle }: DialogProps) => {
+const AddBalanceDialog = ({ isOpen, toggle }: DialogProps) => {
   const {
     register,
     handleSubmit,
@@ -36,7 +36,7 @@ const AddBalanceDialog = ({ isOpen, Toggle }: DialogProps) => {
     try {
       await addBalance({ uid, amount }).unwrap();
       reset();
-      Toggle();
+      toggle();
     } catch (err) {
       setError('root.serverError', {
         message: 'Some unkown error happend.',
@@ -47,7 +47,7 @@ const AddBalanceDialog = ({ isOpen, Toggle }: DialogProps) => {
   return (
     <Dialog
       open={isOpen}
-      onClose={Toggle}
+      onClose={toggle}
       component={'form'}
       onSubmit={handleSubmit(handleAddBalance)}
     >
@@ -56,7 +56,7 @@ const AddBalanceDialog = ({ isOpen, Toggle }: DialogProps) => {
         <AmountInput register={register} errors={errors} />
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
-        <Button onClick={Toggle}>Cancel</Button>
+        <Button onClick={toggle}>Cancel</Button>
         <Button variant="contained" type="submit">
           {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>

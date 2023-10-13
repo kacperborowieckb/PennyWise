@@ -1,13 +1,13 @@
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 
-export const useToggle = (
+export const usetoggle = (
   defaultValue?: boolean
 ): [boolean, () => void, Dispatch<SetStateAction<boolean>>] => {
   const [value, setValue] = useState(!!defaultValue);
 
-  const Toggle = useCallback(() => {
+  const toggle = useCallback(() => {
     setValue((val) => !val);
   }, []);
 
-  return [value, Toggle, setValue];
+  return [value, toggle, setValue];
 };
