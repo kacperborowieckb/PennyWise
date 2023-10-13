@@ -1,7 +1,12 @@
 import { Box } from '@mui/material';
 import GoalCard from '../components/goal-card/GoalCard';
+import { useGetGoalsQuery } from '../features/goals/goalsApiSlice';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { selectCurrentUserId } from '../features/auth/authSlice';
 
 const Goals = () => {
+  const uid = useAppSelector(selectCurrentUserId);
+  const { data, isLoading } = useGetGoalsQuery(uid);
   return (
     <Box
       sx={{
@@ -13,9 +18,9 @@ const Goals = () => {
         flexWrap: 'wrap',
       }}
     >
-      <GoalCard />
-      <GoalCard />
-      <GoalCard />
+      {data?.ids.map((id) => (
+        <GoalCard name={id} />
+      ))}
     </Box>
   );
 };

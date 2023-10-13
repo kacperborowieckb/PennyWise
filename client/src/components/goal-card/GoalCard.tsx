@@ -1,8 +1,16 @@
 import { Box, Paper, Typography } from '@mui/material';
 import GoalProgress from '../goal-progress/GoalProgress';
 import GoalMenu from '../goal-menu/GoalMenu';
+import { useGetGoalsQuery } from '../../features/goals/goalsApiSlice';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { selectCurrentUserId } from '../../features/auth/authSlice';
 
-const GoalCard = () => {
+const GoalCard = ({ name }: { name: string }) => {
+  const uid = useAppSelector(selectCurrentUserId);
+  const { goal } = useGetGoalsQuery(uid, {
+    selectFromResult: ({ data }) => ({ goal: data?.entities[name] }),
+  });
+
   return (
     <Paper
       sx={{
@@ -17,7 +25,7 @@ const GoalCard = () => {
     >
       <Box sx={{ display: 'flex' }}>
         <Typography component={'h3'} variant="h5" sx={{ fontWeight: '700', flexGrow: 1 }}>
-          Goal Title
+          {goal?.name}
         </Typography>
         <GoalMenu />
       </Box>
@@ -31,16 +39,24 @@ const GoalCard = () => {
         }}
       >
         <Typography variant="body1" sx={{ translate: '0 -25%' }}>
-          $2024.32
+          ${goal?.amount}
         </Typography>
         <Typography component={'span'} variant="h4" sx={{ lineHeight: '100%' }}>
           /
         </Typography>
         <Typography variant="body1" sx={{ translate: '0 25%' }}>
-          $2240.32
+          ${goal?.goal}
         </Typography>
       </Box>
-      <GoalProgress value={50} />
+      {goal && (
+        <GoalProgress
+          value={
+            Number(goal.amount) === 0
+              ? 0
+              : Math.round((Number(goal.goal) / Number(goal.amount)) * 10000) / 100
+          }
+        />
+      )}
     </Paper>
   );
 };
