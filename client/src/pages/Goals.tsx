@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import GoalCard from '../components/goal-card/GoalCard';
 import { useGetGoalsQuery } from '../features/goals/goalsApiSlice';
 import { useAppSelector } from '../hooks/useAppSelector';
@@ -18,9 +18,11 @@ const Goals = () => {
         flexWrap: 'wrap',
       }}
     >
-      {data?.ids.map((id) => (
-        <GoalCard name={id} />
-      ))}
+      {!isLoading ? (
+        data?.ids.map((id) => <GoalCard name={id as string} key={id} />)
+      ) : (
+        <CircularProgress />
+      )}
     </Box>
   );
 };

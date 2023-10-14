@@ -9,8 +9,8 @@ const goalsSchema = new Schema({
   goals: [
     {
       name: { type: String, required: true },
-      amount: { type: String, required: true, default: 0 },
-      goal: { type: String, required: true },
+      amount: { type: Number, required: true, default: 0 },
+      goal: { type: Number, required: true },
     },
   ],
 });

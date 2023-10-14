@@ -10,11 +10,11 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import AmountInput from '../amount-input/AmountInput';
 import { zodResolver } from '@hookform/resolvers/zod';
-import CategoryInput from '../category-input/CategoryInput';
 import { useSelector } from 'react-redux';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
 import { DialogProps } from '../../types/DialogProps';
 import GoalInput from '../goal-input/GoalInput';
+import { useGetGoalsQuery, useTransferToGoalMutation } from '../../features/goals/goalsApiSlice';
 
 const transferToGoalSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
@@ -33,11 +33,14 @@ const TransferToGoalDialog = ({ isOpen, toggle }: DialogProps) => {
     formState: { errors },
   } = useForm<TTransferToGoalSchema>({ resolver: zodResolver(transferToGoalSchema) });
   const uid = useSelector(selectCurrentUserId);
-  // const [addExpense, { isLoading }] = useAddExpenseMutation();
+  const { goals } = useGetGoalsQuery(uid, {
+    selectFromResult: ({ data }) => ({ goals: data?.ids }),
+  });
+  const [transferToGoal, { isLoading }] = useTransferToGoalMutation();
 
   const handleTransferToGoal = async ({ amount, goal }: TTransferToGoalSchema) => {
     try {
-      // await addExpense({ uid, amount, category }).unwrap();
+      await transferToGoal({ uid, amount, name: goal }).unwrap();
       reset();
       toggle();
     } catch (err) {
@@ -56,7 +59,12 @@ const TransferToGoalDialog = ({ isOpen, toggle }: DialogProps) => {
     >
       <DialogTitle>Transfer to goal</DialogTitle>
       <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-        <GoalInput register={register} errors={errors} control={control} goals={[]} />
+        <GoalInput
+          register={register}
+          errors={errors}
+          control={control}
+          goals={goals as string[]}
+        />
         <AmountInput register={register} errors={errors} />
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>

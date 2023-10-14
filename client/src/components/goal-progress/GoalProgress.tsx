@@ -11,12 +11,13 @@ const GoalProgress = ({ value }: { value: number }) => {
       borderRadius: 5,
     },
   }));
+
   return (
     <Box>
       <Typography component={'span'} variant="body2" sx={{ mb: '2px' }}>
         {value + '%'}
       </Typography>
-      <BorderLinearProgress variant="determinate" value={value} />
+      <BorderLinearProgress variant="determinate" value={value > 100 ? 100 : value} />
     </Box>
   );
 };

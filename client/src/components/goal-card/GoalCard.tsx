@@ -50,11 +50,7 @@ const GoalCard = ({ name }: { name: string }) => {
       </Box>
       {goal && (
         <GoalProgress
-          value={
-            Number(goal.amount) === 0
-              ? 0
-              : Math.round((Number(goal.goal) / Number(goal.amount)) * 10000) / 100
-          }
+          value={goal.amount === 0 ? 0 : Math.round((goal.amount / goal.goal) * 10000) / 100}
         />
       )}
     </Paper>
