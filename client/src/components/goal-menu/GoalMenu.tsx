@@ -13,6 +13,7 @@ import {
 import { useState } from 'react';
 import { Goals, useDeleteGoalMutation } from '../../features/goals/goalsApiSlice';
 import { useToggle } from '../../hooks/useToggle';
+import TransferToGoalDialog from '../transfer-to-goal-dialog/TransferToGoalDialog';
 
 type GoalMenuProps = {
   uid: string;
@@ -24,6 +25,7 @@ const GoalMenu = ({ uid, goal }: GoalMenuProps) => {
   const open = !!anchorEl;
   const [deleteGoal] = useDeleteGoalMutation();
   const [isConfirmationOpen, toggleConfirmation] = useToggle();
+  const [isTransferDialogOpen, toggleTransferDialog] = useToggle();
 
   const openMenu = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
 
@@ -44,7 +46,7 @@ const GoalMenu = ({ uid, goal }: GoalMenuProps) => {
         <MoreVert />
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={closeMenu}>
-        <MenuItem>
+        <MenuItem onClick={toggleTransferDialog}>
           <ListItemIcon>
             <Payment />
           </ListItemIcon>
@@ -64,6 +66,7 @@ const GoalMenu = ({ uid, goal }: GoalMenuProps) => {
           Delete
         </MenuItem>
       </Menu>
+      <TransferToGoalDialog isOpen={isTransferDialogOpen} toggle={toggleTransferDialog} />
       <Dialog open={isConfirmationOpen} onClose={toggleConfirmation} sx={{ p: 4 }}>
         <DialogTitle>Delete {goal?.name}?</DialogTitle>
         <DialogActions sx={{ m: '0 auto', pb: 2 }}>
