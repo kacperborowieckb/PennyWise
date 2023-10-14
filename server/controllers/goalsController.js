@@ -11,6 +11,20 @@ const addNewGoal = async (req, res) => {
   return res.json({ message: `New goal: ${name} added!` });
 };
 
+const deleteGoal = async (req, res) => {
+  const { uid, name, amount } = req.body;
+  const goals = await findGoals(uid, res);
+  const wallet = await findWallet(uid, res);
+
+  goals.goals = [...goals.goals.filter((goal) => goal.name !== name)];
+  wallet.balance += amount;
+
+  goals.save();
+  wallet.save();
+
+  return res.json({ message: `${name} deleted, ${amount} transferred to balance` });
+};
+
 const transferToGoal = async (req, res) => {
   const { uid, amount, name } = req.body;
   const goals = await findGoals(uid, res);
@@ -35,4 +49,5 @@ module.exports = {
   transferToGoal,
   getUserGoals,
   addNewGoal,
+  deleteGoal,
 };

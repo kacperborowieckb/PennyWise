@@ -70,7 +70,7 @@ const TransferToGoalDialog = ({ isOpen, toggle }: DialogProps) => {
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toggle}>Cancel</Button>
         <Button type="submit" variant="contained">
-          {false ? <CircularProgress color="inherit" size={25} /> : 'Add'}
+          {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>
       </DialogActions>
     </Dialog>

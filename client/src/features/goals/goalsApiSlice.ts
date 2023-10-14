@@ -1,7 +1,7 @@
 import { EntityState, createEntityAdapter } from '@reduxjs/toolkit';
 import { api } from '../api/apiSlice';
 
-type Goals = {
+export type Goals = {
   name: string;
   amount: number;
   goal: number;
@@ -45,7 +45,7 @@ export const goalsApiSlice = api.injectEndpoints({
         method: 'PATCH',
         body: { ...args },
       }),
-      invalidatesTags: [{ type: 'Goals', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Goals', id: 'LIST' }, 'Balance'],
     }),
     deleteGoal: builder.mutation<void, Partial<Goals> & { uid: string }>({
       query: (args) => ({
@@ -53,7 +53,7 @@ export const goalsApiSlice = api.injectEndpoints({
         method: 'DELETE',
         body: { ...args },
       }),
-      invalidatesTags: [{ type: 'Goals', id: 'LIST' }],
+      invalidatesTags: [{ type: 'Goals', id: 'LIST' }, 'Balance'],
     }),
   }),
 });

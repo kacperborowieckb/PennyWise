@@ -27,7 +27,7 @@ const GoalCard = ({ name }: { name: string }) => {
         <Typography component={'h3'} variant="h5" sx={{ fontWeight: '700', flexGrow: 1 }}>
           {goal?.name}
         </Typography>
-        <GoalMenu />
+        <GoalMenu uid={uid} goal={goal} />
       </Box>
       <Box
         sx={{
