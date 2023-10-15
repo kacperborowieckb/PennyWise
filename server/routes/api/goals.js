@@ -8,6 +8,8 @@ router
   .patch(goalsController.transferToGoal)
   .delete(goalsController.deleteGoal);
 
+router.route('/withdraw').patch(goalsController.withdrawFromGoal);
+
 router.route('/:uid').get(goalsController.getUserGoals);
 
 module.exports = router;

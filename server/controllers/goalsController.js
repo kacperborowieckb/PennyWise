@@ -46,20 +46,20 @@ const getUserGoals = async (req, res) => {
 };
 
 const withdrawFromGoal = async (req, res) => {
-  const { uid, name, amountToWithdraw } = req.body;
+  const { uid, name, amount } = req.body;
 
   const goals = await findGoals(uid, res);
   const wallet = await findWallet(uid, res);
 
   const currentGoal = goals.goals.find((goal) => goal.name === name);
 
-  currentGoal.amount -= amountToWithdraw;
-  wallet.balance += amountToWithdraw;
+  currentGoal.amount -= amount;
+  wallet.balance += amount;
 
   wallet.save();
   goals.save();
 
-  return res.json({ message: `Transferred ${amountToWithdraw} to balance!` });
+  return res.json({ message: `Transferred ${amount} to balance!` });
 };
 
 module.exports = {

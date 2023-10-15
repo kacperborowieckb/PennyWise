@@ -55,6 +55,14 @@ export const goalsApiSlice = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Goals', id: 'LIST' }, 'Balance'],
     }),
+    withDrawFromGoal: builder.mutation<void, Partial<Goals> & { uid: string }>({
+      query: (args) => ({
+        url: '/goals/withdraw',
+        method: 'PATCH',
+        body: { ...args },
+      }),
+      invalidatesTags: [{ type: 'Goals', id: 'LIST' }, 'Balance'],
+    }),
   }),
 });
 
@@ -63,4 +71,5 @@ export const {
   useTransferToGoalMutation,
   useAddNewGoalMutation,
   useDeleteGoalMutation,
+  useWithDrawFromGoalMutation,
 } = goalsApiSlice;
