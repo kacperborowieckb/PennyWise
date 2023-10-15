@@ -13,7 +13,6 @@ type CalendarProps = {
 
 const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
   const [isPlanAPaymentOpen, togglePlanAPayment] = useToggle(false);
-
   return (
     <Stack>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -27,7 +26,11 @@ const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
         Plan a payment
       </Button>
       {isPlanAPaymentOpen && (
-        <PlanAPaymentDialog isOpen={isPlanAPaymentOpen} toggle={togglePlanAPayment} />
+        <PlanAPaymentDialog
+          isOpen={isPlanAPaymentOpen}
+          toggle={togglePlanAPayment}
+          selectedDate={selectedDate}
+        />
       )}
     </Stack>
   );

@@ -66,7 +66,11 @@ const GoalMenu = ({ uid, goal }: GoalMenuProps) => {
           Delete
         </MenuItem>
       </Menu>
-      <TransferToGoalDialog isOpen={isTransferDialogOpen} toggle={toggleTransferDialog} />
+      <TransferToGoalDialog
+        isOpen={isTransferDialogOpen}
+        toggle={toggleTransferDialog}
+        goal={goal?.name as string}
+      />
       <Dialog open={isConfirmationOpen} onClose={toggleConfirmation} sx={{ p: 4 }}>
         <DialogTitle>Delete {goal?.name}?</DialogTitle>
         <DialogActions sx={{ m: '0 auto', pb: 2 }}>

@@ -20,7 +20,7 @@ import { selectCurrentUserId } from '../../features/auth/authSlice';
 import dayjs, { Dayjs } from 'dayjs';
 
 type PlanAPaymentDialogProps = DialogProps & {
-  date?: any;
+  selectedDate?: Dayjs | null;
 };
 
 const addExpenseSchema = z.object({
@@ -31,7 +31,7 @@ const addExpenseSchema = z.object({
 
 type TPlanAPaymentSchema = z.infer<typeof addExpenseSchema>;
 
-const PlanAPaymentDialog = ({ isOpen, toggle }: PlanAPaymentDialogProps) => {
+const PlanAPaymentDialog = ({ isOpen, toggle, selectedDate }: PlanAPaymentDialogProps) => {
   const uid = useAppSelector(selectCurrentUserId);
   const {
     register,
@@ -55,7 +55,7 @@ const PlanAPaymentDialog = ({ isOpen, toggle }: PlanAPaymentDialogProps) => {
       toggle();
     } catch (err) {
       setError('root.serverError', {
-        message: 'Some unkown error happend.',
+        message: 'Some unknown error happened.',
       });
     }
   };
@@ -69,7 +69,7 @@ const PlanAPaymentDialog = ({ isOpen, toggle }: PlanAPaymentDialogProps) => {
     >
       <DialogTitle>Plan a payment</DialogTitle>
       <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-        <DateInput control={control} />
+        <DateInput control={control} selectedDate={selectedDate} />
         <CategoryInput register={register} errors={errors} control={control} />
         <AmountInput register={register} errors={errors} />
       </DialogContent>

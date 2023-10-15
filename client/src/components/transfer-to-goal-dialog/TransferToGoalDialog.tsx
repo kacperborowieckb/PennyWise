@@ -23,7 +23,7 @@ const transferToGoalSchema = z.object({
 
 type TTransferToGoalSchema = z.infer<typeof transferToGoalSchema>;
 
-const TransferToGoalDialog = ({ isOpen, toggle }: DialogProps) => {
+const TransferToGoalDialog = ({ isOpen, toggle, goal }: DialogProps & { goal?: string }) => {
   const {
     register,
     handleSubmit,
@@ -64,6 +64,7 @@ const TransferToGoalDialog = ({ isOpen, toggle }: DialogProps) => {
           errors={errors}
           control={control}
           goals={goals as string[]}
+          goal={goal}
         />
         <AmountInput register={register} errors={errors} />
       </DialogContent>
