@@ -1,7 +1,8 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
-import ExpensesChart from '../expenses-chart/ExpensesChart';
-import MonthlyRatioChart from '../monthly-ratio-chart/MonthlyRatioChart';
+import { Box, CircularProgress, Grid, Paper, Typography } from '@mui/material';
 import Balance from '../balance/Balance';
+import React, { Suspense } from 'react';
+const MonthlyRatioChart = React.lazy(() => import('../monthly-ratio-chart/MonthlyRatioChart'));
+const ExpensesChart = React.lazy(() => import('../expenses-chart/ExpensesChart'));
 
 const Budget = () => {
   return (
@@ -12,7 +13,9 @@ const Budget = () => {
             <Balance />
           </Grid>
           <Grid item xs={12}>
-            <MonthlyRatioChart />
+            <Suspense fallback={<CircularProgress />}>
+              <MonthlyRatioChart />
+            </Suspense>
           </Grid>
         </Grid>
         <Grid item xs={12} md={5}>
@@ -28,7 +31,9 @@ const Budget = () => {
               gap: 2,
             }}
           >
-            <ExpensesChart />
+            <Suspense fallback={<CircularProgress />}>
+              <ExpensesChart />
+            </Suspense>
           </Box>
         </Grid>
       </Grid>

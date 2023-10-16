@@ -9,12 +9,12 @@ import {
   Link,
   Menu,
   MenuItem,
-  MenuList,
   Toolbar,
   Tooltip,
   Typography,
   useColorScheme,
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { MouseEvent, useState } from 'react';
 import Logo from '../logo/Logo';
 import { useLocation, useNavigate } from 'react-router';
@@ -86,7 +86,7 @@ const Nav = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuList />
+              <MenuIcon />
             </IconButton>
             <Menu
               id="menu-appbar"
