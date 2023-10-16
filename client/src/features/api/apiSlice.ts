@@ -3,8 +3,7 @@ import { RootState } from '../../app/store';
 import { logOut, setCredentials } from '../auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: 'https://pennywise-api.onrender.com',
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://pennywise-api.onrender.com',
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.accessToken;
