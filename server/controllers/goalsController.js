@@ -31,12 +31,14 @@ const transferToGoal = async (req, res) => {
   const wallet = await findWallet(uid, res);
 
   const currentGoal = goals.goals.find((goal) => goal.name === name);
+  const isFinished =
+    currentGoal.amount + amount >= currentGoal.goal && currentGoal.amount < currentGoal.goal;
   currentGoal.amount += amount;
   goals.save();
   wallet.balance -= amount;
   wallet.save();
 
-  return res.json({ message: `${amount} transferred to ${name}` });
+  return res.json({ message: `${amount} transferred to ${name}`, isFinished });
 };
 
 const getUserGoals = async (req, res) => {

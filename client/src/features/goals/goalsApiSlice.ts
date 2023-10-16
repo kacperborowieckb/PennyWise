@@ -39,7 +39,10 @@ export const goalsApiSlice = api.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Goals', id: 'LIST' }],
     }),
-    transferToGoal: builder.mutation<void, Partial<Goals> & { uid: string }>({
+    transferToGoal: builder.mutation<
+      { message: string; isFinished: boolean },
+      Partial<Goals> & { uid: string }
+    >({
       query: (args) => ({
         url: '/goals',
         method: 'PATCH',
