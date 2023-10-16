@@ -3,7 +3,7 @@ const { findWallet } = require('../utils/findWallet');
 const getBalance = async (req, res) => {
   const wallet = await findWallet(req?.params?.uid, res);
 
-  return res.json(wallet.balance);
+  return res.json(Number(wallet.balance));
 };
 
 const addBalance = async (req, res) => {
@@ -12,7 +12,7 @@ const addBalance = async (req, res) => {
   const wallet = await findWallet(uid, res);
   const createdAt = new Date();
 
-  wallet.balance += amount;
+  wallet.balance = (Number(wallet.balance) + amount).toFixed(2);
   wallet.transactions.push({ category: 'Income', amount, createdAt });
 
   await wallet.save();

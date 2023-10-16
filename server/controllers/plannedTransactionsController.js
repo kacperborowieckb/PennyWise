@@ -4,11 +4,9 @@ const deletePlannedTransaction = async (req, res) => {
   const { uid, ids } = req.body;
   if (ids.length < 0) return res.json(400, { Message: 'Transaction ids required' });
   const wallet = await findWallet(uid, res);
-  const newTransactions = wallet.plannedTransactions.filter(
+  wallet.plannedTransactions = wallet.plannedTransactions.filter(
     ({ _id }) => ids.indexOf(_id.toString()) === -1
   );
-
-  wallet.plannedTransactions = [...newTransactions];
 
   wallet.save();
 
@@ -18,7 +16,14 @@ const deletePlannedTransaction = async (req, res) => {
 const getPlannedTransactions = async (req, res) => {
   const wallet = await findWallet(req?.params?.uid, res);
 
-  return res.json(wallet.plannedTransactions);
+  const plannedTransactions = wallet.plannedTransactions.map((transaction) => ({
+    createdAt: transaction.createdAt,
+    plannedFor: transaction.plannedFor,
+    amount: Number(transaction.amount),
+    category: transaction.category,
+    _id: transaction._id,
+  }));
+  return res.json(plannedTransactions);
 };
 
 const addPlannedTransaction = async (req, res) => {

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Decimal128 = require('mongodb').Decimal128;
 
 const walletSchema = new Schema({
   uid: {
@@ -11,39 +12,39 @@ const walletSchema = new Schema({
     default: '$',
   },
   balance: {
-    type: Number,
-    default: 0,
+    type: Decimal128,
+    default: 0.0,
   },
   expenses: {
-    type: Number,
-    default: 0,
+    type: Decimal128,
+    default: 0.0,
   },
   categoriesExpenses: {
     bills: {
-      type: Number,
-      default: 0,
+      type: Decimal128,
+      default: 0.0,
     },
     personal: {
-      type: Number,
-      default: 0,
+      type: Decimal128,
+      default: 0.0,
     },
     groceries: {
-      type: Number,
-      default: 0,
+      type: Decimal128,
+      default: 0.0,
     },
     travel: {
-      type: Number,
-      default: 0,
+      type: Decimal128,
+      default: 0.0,
     },
     health: {
-      type: Number,
-      default: 0,
+      type: Decimal128,
+      default: 0.0,
     },
   },
   transactions: [
     {
       createdAt: { type: Date, required: true },
-      amount: { type: Number, required: true },
+      amount: { type: Decimal128, required: true },
       category: { type: String, required: true },
     },
   ],
@@ -51,7 +52,7 @@ const walletSchema = new Schema({
     {
       createdAt: { type: Date, required: true },
       plannedFor: { type: String, required: true },
-      amount: { type: Number, required: true },
+      amount: { type: Decimal128, required: true },
       category: { type: String, required: true },
     },
   ],

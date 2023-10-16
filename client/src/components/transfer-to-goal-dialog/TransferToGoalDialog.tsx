@@ -43,10 +43,7 @@ const TransferToGoalDialog = ({ isOpen, toggle, goal }: DialogProps & { goal?: s
   const [transferToGoal, { isLoading }] = useTransferToGoalMutation();
   const [isExploding, setIsExploding] = useState<boolean>(false);
 
-  const handleFinishExplosion = () => {
-    console.log('cocos');
-    setIsExploding(false);
-  };
+  const handleFinishExplosion = () => setIsExploding(false);
 
   const handleTransferToGoal = async ({ amount, goal }: TTransferToGoalSchema) => {
     try {

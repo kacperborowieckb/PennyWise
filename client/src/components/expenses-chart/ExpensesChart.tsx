@@ -10,7 +10,7 @@ import { Categories } from '../../helpers/categories';
 const ExpensesChart = () => {
   const uid = useAppSelector(selectCurrentUserId);
   const { data: expenses } = useGetExpensesQuery(uid);
-
+  console.log(expenses);
   return (
     <Stack alignItems={'center'} spacing={2} pb={2}>
       {expenses?.totalExpenses !== 0 ? (

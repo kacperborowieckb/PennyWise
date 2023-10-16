@@ -35,7 +35,7 @@ const MonthlyRatioChart = () => {
         ]}
         width={400}
         height={300}
-        sx={{ transform: 'scale(1.1)' }}
+        sx={{ transform: 'scale(1.1)', mt: matches ? 6 : 0 }}
       />
     );
   } else {

@@ -19,8 +19,8 @@ const deleteGoal = async (req, res) => {
   const goals = await findGoals(uid, res);
   const wallet = await findWallet(uid, res);
 
-  goals.goals = [...goals.goals.filter((goal) => goal.name !== name)];
-  wallet.balance += amount;
+  goals.goals = goals.goals.filter((goal) => goal.name !== name);
+  wallet.balance = (Number(wallet.balance) + amount).toFixed(2);
 
   goals.save();
   wallet.save();
@@ -35,10 +35,11 @@ const transferToGoal = async (req, res) => {
 
   const currentGoal = goals.goals.find((goal) => goal.name === name);
   const isFinished =
-    currentGoal.amount + amount >= currentGoal.goal && currentGoal.amount < currentGoal.goal;
-  currentGoal.amount += amount;
+    Number(currentGoal.amount) + amount >= Number(currentGoal.goal) &&
+    Number(currentGoal.amount) < Number(currentGoal.goal);
+  currentGoal.amount = (Number(currentGoal.amount) + amount).toFixed(2);
+  wallet.balance = (Number(wallet.balance) - amount).toFixed(2);
   goals.save();
-  wallet.balance -= amount;
   wallet.save();
 
   return res.json({ message: `${amount} transferred to ${name}`, isFinished });
@@ -46,8 +47,14 @@ const transferToGoal = async (req, res) => {
 
 const getUserGoals = async (req, res) => {
   const goals = await findGoals(req?.params?.uid, res);
+  const formattedGoals = goals.goals.map((goal) => ({
+    name: goal.name,
+    amount: Number(goal.amount),
+    goal: Number(goal.goal),
+    _id: goal._id,
+  }));
 
-  return res.json(goals.goals);
+  return res.json(formattedGoals);
 };
 
 const withdrawFromGoal = async (req, res) => {
@@ -58,8 +65,8 @@ const withdrawFromGoal = async (req, res) => {
 
   const currentGoal = goals.goals.find((goal) => goal.name === name);
 
-  currentGoal.amount -= amount;
-  wallet.balance += amount;
+  currentGoal.amount = (Number(currentGoal.amount) - amount).toFixed(2);
+  wallet.balance = (Number(wallet.balance) + amount).toFixed(2);
 
   wallet.save();
   goals.save();

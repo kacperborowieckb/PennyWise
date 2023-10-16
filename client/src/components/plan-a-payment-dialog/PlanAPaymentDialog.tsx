@@ -39,12 +39,11 @@ const PlanAPaymentDialog = ({ isOpen, toggle, selectedDate }: PlanAPaymentDialog
     handleSubmit,
     reset,
     setError,
-    getValues,
     control,
     formState: { errors },
   } = useForm<TPlanAPaymentSchema>({ resolver: zodResolver(addExpenseSchema) });
   const [addTransaction, { isLoading }] = useAddPlannedTransactionMutation();
-  console.log(getValues());
+
   const handlePlanATransaction = async ({ amount, category, plannedFor }: TPlanAPaymentSchema) => {
     try {
       const formattedDate = dayjs(plannedFor).format('YYYY-MM-DD');
