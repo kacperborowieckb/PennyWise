@@ -38,6 +38,13 @@ const signUpSchema = z
 
 type TSignUpSchema = z.infer<typeof signUpSchema>;
 
+type ErrorType = {
+  status: string;
+  originalStatus: number;
+  data: string;
+  error: string;
+};
+
 const SignUp = () => {
   const {
     register,
@@ -57,12 +64,12 @@ const SignUp = () => {
       reset();
       navigate('/signin');
     } catch (err) {
-      const knownError = err as Error;
-      if (!knownError?.status) {
+      const knownError = err as ErrorType;
+      if (!knownError?.originalStatus) {
         setError('No Server Response');
-      } else if (knownError.status === 400) {
+      } else if (knownError.originalStatus === 400) {
         setError('Missing Username or Password');
-      } else if (knownError.status === 409) {
+      } else if (knownError.originalStatus === 409) {
         setError('Username is taken');
       } else {
         setError('Register Failed');
