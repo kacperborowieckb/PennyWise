@@ -3,8 +3,10 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   Container,
   IconButton,
+  Link,
   Menu,
   MenuItem,
   Toolbar,
@@ -19,6 +21,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentUserName } from '../../features/auth/authSlice';
 import { useLogoutMutation } from '../../features/auth/authApiSlice';
+import { toast } from 'sonner';
 
 const pages = ['Overview', 'Transactions', 'Goals'];
 const locationsPath: {
@@ -34,7 +37,7 @@ const Nav = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const location = useLocation();
   const username = useAppSelector(selectCurrentUserName);
-  const [logout] = useLogoutMutation();
+  const [logout, { isLoading }] = useLogoutMutation();
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
@@ -52,10 +55,15 @@ const Nav = () => {
     setAnchorElUser(null);
   };
 
-  const handleLogout = () => {
-    logout();
-    handleCloseUserMenu();
-    navigate('/welcome');
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      handleCloseUserMenu();
+      navigate('/welcome');
+      toast.success('Logged out');
+    } catch (err) {
+      toast.error('Failed to log out');
+    }
   };
 
   return (
@@ -93,8 +101,26 @@ const Nav = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    backgroundColor:
+                      locationsPath[location.pathname] === page
+                        ? (theme) => theme.palette.primary.main
+                        : undefined,
+                  }}
+                >
+                  <Link
+                    textAlign="center"
+                    href={`/${page === locationsPath['/'] ? '' : page.toLowerCase()}`}
+                    sx={{
+                      textDecoration: 'none',
+                      color: (theme) => theme.palette.text.primary,
+                    }}
+                  >
+                    {page}
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -141,7 +167,11 @@ const Nav = () => {
                 <Typography textAlign="center">Setting</Typography>
               </MenuItem>
               <MenuItem onClick={handleLogout}>
-                <Typography textAlign="center">Log out</Typography>
+                {isLoading ? (
+                  <CircularProgress size={14} sx={{ margin: '0 auto' }} />
+                ) : (
+                  <Typography textAlign="center">Log out</Typography>
+                )}
               </MenuItem>
             </Menu>
           </Box>
