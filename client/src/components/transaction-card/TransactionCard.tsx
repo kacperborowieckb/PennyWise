@@ -4,6 +4,7 @@ import { Categories } from '../../helpers/categories';
 import { useGetTransactionsQuery } from '../../features/transactions/transactionsApiSlice';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { motion } from 'framer-motion';
 
 const TransactionCard = ({ id }: { id: string }) => {
   const uid = useAppSelector(selectCurrentUserId);
@@ -13,16 +14,18 @@ const TransactionCard = ({ id }: { id: string }) => {
     }),
   });
   let content;
-
   if (transaction) {
     content = (
       <Card
+        layout
+        component={motion.div}
+        initial={{ opacity: 0, width: 0 }}
+        animate={{ opacity: 1, width: 'auto' }}
+        whileHover={{ scale: 1.03 }}
         variant="outlined"
         sx={{
           minWidth: 180,
           cursor: 'pointer',
-          ':hover': { transform: 'scale(1.03)' },
-          transition: 'transform 0.3s ease',
         }}
       >
         <CardContent
