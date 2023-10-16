@@ -48,7 +48,7 @@ export const goalsApiSlice = api.injectEndpoints({
         method: 'PATCH',
         body: { ...args },
       }),
-      invalidatesTags: [{ type: 'Goals', id: 'LIST' }, 'Balance'],
+      invalidatesTags: (_, __, arg) => [{ type: 'Goals', id: arg.name }, 'Balance'],
     }),
     deleteGoal: builder.mutation<void, Partial<Goals> & { uid: string }>({
       query: (args) => ({
@@ -56,7 +56,7 @@ export const goalsApiSlice = api.injectEndpoints({
         method: 'DELETE',
         body: { ...args },
       }),
-      invalidatesTags: [{ type: 'Goals', id: 'LIST' }, 'Balance'],
+      invalidatesTags: (_, __, arg) => [{ type: 'Goals', id: arg.name }, 'Balance'],
     }),
     withDrawFromGoal: builder.mutation<void, Partial<Goals> & { uid: string }>({
       query: (args) => ({
@@ -64,7 +64,7 @@ export const goalsApiSlice = api.injectEndpoints({
         method: 'PATCH',
         body: { ...args },
       }),
-      invalidatesTags: [{ type: 'Goals', id: 'LIST' }, 'Balance'],
+      invalidatesTags: (_, __, arg) => [{ type: 'Goals', id: arg.name }, 'Balance'],
     }),
   }),
 });

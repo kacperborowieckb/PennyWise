@@ -12,8 +12,8 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  useColorScheme,
 } from '@mui/material';
-import pennyWiseLogoImg from '../../assets/logo.svg';
 import MenuIcon from '@mui/icons-material/Menu';
 import { MouseEvent, useState } from 'react';
 import Logo from '../logo/Logo';
@@ -22,6 +22,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentUserName } from '../../features/auth/authSlice';
 import { useLogoutMutation } from '../../features/auth/authApiSlice';
 import { toast } from 'sonner';
+import { AccountCircle, DarkMode, LightMode } from '@mui/icons-material';
 
 const pages = ['Overview', 'Transactions', 'Goals'];
 const locationsPath: {
@@ -39,6 +40,11 @@ const Nav = () => {
   const username = useAppSelector(selectCurrentUserName);
   const [logout, { isLoading }] = useLogoutMutation();
   const navigate = useNavigate();
+  const { mode, setMode } = useColorScheme();
+
+  const handleChangeMode = () => {
+    mode === 'dark' ? setMode('light') : setMode('dark');
+  };
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -70,7 +76,7 @@ const Nav = () => {
     <AppBar position="static" sx={{ borderRadius: 0 }} elevation={6}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Logo height={60} />
+          <Logo height={64} styles={{ marginTop: '4px' }} />
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -138,13 +144,18 @@ const Nav = () => {
               </Button>
             ))}
           </Box>
+          <IconButton onClick={handleChangeMode} sx={{ mr: 2, color: 'white' }}>
+            {mode === 'dark' ? <DarkMode /> : <LightMode />}
+          </IconButton>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexGrow: 0 }}>
             <Typography component={'p'} variant="body1">
               {username}
             </Typography>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={pennyWiseLogoImg} />
+                <Avatar>
+                  <AccountCircle sx={{ width: '100%', height: '100%' }} />
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
@@ -163,9 +174,6 @@ const Nav = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">Setting</Typography>
-              </MenuItem>
               <MenuItem onClick={handleLogout}>
                 {isLoading ? (
                   <CircularProgress size={14} sx={{ margin: '0 auto' }} />

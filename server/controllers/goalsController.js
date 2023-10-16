@@ -5,6 +5,9 @@ const addNewGoal = async (req, res) => {
   const { uid, name, goal } = req.body;
   const goals = await findGoals(uid, res);
 
+  const duplicate = goals.goals.find((goal) => goal.name === name);
+  if (duplicate) return res.sendStatus(409); //Conflict
+
   goals.goals.push({ uid, name, goal });
   goals.save();
 

@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, useColorScheme } from '@mui/material';
 import { categoriesProperties } from '../../helpers/categoriesProperties';
 import { Categories } from '../../helpers/categories';
 import { useGetTransactionsQuery } from '../../features/transactions/transactionsApiSlice';
@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 
 const TransactionCard = ({ id }: { id: string }) => {
   const uid = useAppSelector(selectCurrentUserId);
+  const { mode } = useColorScheme();
   const { transaction } = useGetTransactionsQuery(uid, {
     selectFromResult: ({ data }) => ({
       transaction: data?.entities[id],
@@ -21,11 +22,9 @@ const TransactionCard = ({ id }: { id: string }) => {
         component={motion.div}
         initial={{ opacity: 0, width: 0 }}
         animate={{ opacity: 1, width: 'auto' }}
-        whileHover={{ scale: 1.03 }}
         variant="outlined"
         sx={{
           minWidth: 180,
-          cursor: 'pointer',
         }}
       >
         <CardContent
@@ -41,6 +40,7 @@ const TransactionCard = ({ id }: { id: string }) => {
             component={'h6'}
             variant="h5"
             sx={{
+              color: mode === 'light' ? (theme) => theme.palette.background.default : undefined,
               px: 1,
               width: '100%',
               borderRadius: 1,

@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, useColorScheme } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useAppSelector } from '../hooks/useAppSelector';
 import { selectCurrentUserId } from '../features/auth/authSlice';
@@ -31,6 +31,7 @@ const columns: GridColDef[] = [
 const Transactions = () => {
   const uid = useAppSelector(selectCurrentUserId);
   const { data, isLoading } = useGetTransactionsQuery(uid);
+  const { mode } = useColorScheme();
   const rows = data?.ids.map((id) => ({
     id: id,
     category: data.entities[id]?.category,
@@ -51,7 +52,8 @@ const Transactions = () => {
           columns={columns}
           autoPageSize
           sx={{
-            backgroundColor: (theme) => theme.palette.grey[900],
+            backgroundColor: (theme) =>
+              mode === 'dark' ? theme.palette.grey[900] : theme.palette.grey[100],
             '& *': { outline: 'none !important' },
           }}
         />

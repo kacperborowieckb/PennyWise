@@ -16,9 +16,10 @@ import { DialogProps } from '../../types/DialogProps';
 import { useAddNewGoalMutation } from '../../features/goals/goalsApiSlice';
 import GoalNameInput from '../goal-name-input/GoalNameInput';
 import { toast } from 'sonner';
+import { ErrorType } from '../../pages/SignUp';
 
 const addNewGoalSchema = z.object({
-  amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
+  amount: z.coerce.number().multipleOf(0.01).min(0.01, 'Minimum is 0.01'),
   name: z.string().min(2, 'Minimum length of name is 2').max(16, 'Maximum length of name is 16'),
 });
 
@@ -42,10 +43,14 @@ const AddNewGoalDialog = ({ isOpen, toggle }: DialogProps) => {
       toggle();
       toast.success(`${name} has been created!`);
     } catch (err) {
-      toast.error('Failed to create a goal.');
-      setError('root.serverError', {
-        message: 'Some unknown error happened.',
-      });
+      const error = err as ErrorType;
+      if (error.originalStatus !== 409) {
+        toast.error('Failed to create a goal.');
+        setError('root.serverError', {
+          message: 'Some unknown error happened.',
+        });
+      }
+      toast.error(`Already have '${name}' goal`);
     }
   };
 

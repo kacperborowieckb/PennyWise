@@ -19,6 +19,9 @@ const AmountInput = ({ register, errors }: InputProps) => {
         error={!!errors.amount}
         autoComplete="off"
         type="number"
+        inputProps={{
+          step: '0.01',
+        }}
       />
       <FormHelperText error={!!errors.amount}>{errors.amount?.message?.toString()}</FormHelperText>
     </FormControl>

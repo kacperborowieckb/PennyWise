@@ -1,5 +1,4 @@
-import { Info } from '@mui/icons-material';
-import { Box, CircularProgress, Tooltip, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import { useGetBalanceQuery } from '../../features/balance/balanceApiSlice';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
@@ -16,16 +15,7 @@ const Balance = () => {
             <CircularProgress />
           </Box>
         ) : (
-          <>
-            {balance}$
-            <Tooltip
-              title="You can change currency in settings"
-              sx={{ position: 'absolute', ml: '3px' }}
-              enterTouchDelay={0}
-            >
-              <Info fontSize="small" />
-            </Tooltip>
-          </>
+          <>{balance}$</>
         )}
       </Typography>
       <Typography component={'p'} variant="h6">
