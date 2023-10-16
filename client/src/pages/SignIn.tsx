@@ -21,11 +21,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePersist } from '../hooks/usePersist';
-
-type Error = {
-  status: number;
-  data: unknown;
-};
+import { ErrorType } from './SignUp';
 
 const signInSchema = z.object({
   username: z
@@ -59,12 +55,12 @@ const SignIn = () => {
       reset();
       navigate('/');
     } catch (err) {
-      const knownError = err as Error;
-      if (!knownError?.status) {
+      const knownError = err as ErrorType;
+      if (!knownError?.originalStatus) {
         setError('No Server Response');
-      } else if (knownError.status === 400) {
+      } else if (knownError.originalStatus === 400) {
         setError('Missing Username or Password');
-      } else if (knownError.status === 401) {
+      } else if (knownError.originalStatus === 401) {
         setError('Unauthorized');
       } else {
         setError('Login Failed');

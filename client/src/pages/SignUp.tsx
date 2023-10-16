@@ -17,11 +17,6 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-type Error = {
-  status: number;
-  data: unknown;
-};
-
 const signUpSchema = z
   .object({
     username: z
@@ -38,7 +33,7 @@ const signUpSchema = z
 
 type TSignUpSchema = z.infer<typeof signUpSchema>;
 
-type ErrorType = {
+export type ErrorType = {
   status: string;
   originalStatus: number;
   data: string;
