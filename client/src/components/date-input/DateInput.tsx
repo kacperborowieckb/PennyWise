@@ -14,7 +14,7 @@ const DateInput = ({ control, selectedDate }: DateInputProps) => {
       <Controller
         name="plannedFor"
         control={control}
-        defaultValue={selectedDate || ''}
+        defaultValue={selectedDate || dayjs()}
         render={({ field: { value, onChange } }) => (
           <DatePicker
             sx={{ m: 1 }}

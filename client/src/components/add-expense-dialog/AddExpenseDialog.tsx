@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
 import { useAddExpenseMutation } from '../../features/expenses/expensesApiSlice';
 import { DialogProps } from '../../types/DialogProps';
+import { toast } from 'sonner';
 
 const addExpenseSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
@@ -41,7 +42,9 @@ const AddExpenseDialog = ({ isOpen, toggle }: DialogProps) => {
       await addExpense({ uid, amount, category }).unwrap();
       reset();
       toggle();
+      toast.success(`${category} transactions added`);
     } catch (err) {
+      toast.error('Failed to make transaction');
       setError('root.serverError', {
         message: 'Some unknown error happened.',
       });

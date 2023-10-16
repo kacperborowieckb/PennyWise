@@ -18,6 +18,7 @@ import { useAddPlannedTransactionMutation } from '../../features/planned-transac
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { selectCurrentUserId } from '../../features/auth/authSlice';
 import dayjs, { Dayjs } from 'dayjs';
+import { toast } from 'sonner';
 
 type PlanAPaymentDialogProps = DialogProps & {
   selectedDate?: Dayjs | null;
@@ -38,22 +39,26 @@ const PlanAPaymentDialog = ({ isOpen, toggle, selectedDate }: PlanAPaymentDialog
     handleSubmit,
     reset,
     setError,
+    getValues,
     control,
     formState: { errors },
   } = useForm<TPlanAPaymentSchema>({ resolver: zodResolver(addExpenseSchema) });
   const [addTransaction, { isLoading }] = useAddPlannedTransactionMutation();
-
+  console.log(getValues());
   const handlePlanATransaction = async ({ amount, category, plannedFor }: TPlanAPaymentSchema) => {
     try {
+      const formattedDate = dayjs(plannedFor).format('YYYY-MM-DD');
       await addTransaction({
         amount,
         category,
-        plannedFor: dayjs(plannedFor).format('YYYY-MM-DD'),
+        plannedFor: formattedDate,
         uid,
       }).unwrap();
       reset();
       toggle();
+      toast.success(`Payment planned for ${formattedDate}`);
     } catch (err) {
+      toast.error('Failed planning a payment');
       setError('root.serverError', {
         message: 'Some unknown error happened.',
       });

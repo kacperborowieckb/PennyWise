@@ -14,6 +14,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AmountInput from '../amount-input/AmountInput';
 import { DialogProps } from '../../types/DialogProps';
+import { toast } from 'sonner';
 
 const addBalanceSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
@@ -37,9 +38,11 @@ const AddBalanceDialog = ({ isOpen, toggle }: DialogProps) => {
       await addBalance({ uid, amount }).unwrap();
       reset();
       toggle();
+      toast.success(`Added $${amount} to balance`);
     } catch (err) {
+      toast.error('Failed to add balance');
       setError('root.serverError', {
-        message: 'Some unkown error happend.',
+        message: 'Some unknown error happened.',
       });
     }
   };
