@@ -15,6 +15,7 @@ import { selectCurrentUserId } from '../../features/auth/authSlice';
 import { DialogProps } from '../../types/DialogProps';
 import GoalInput from '../goal-input/GoalInput';
 import { useGetGoalsQuery, useTransferToGoalMutation } from '../../features/goals/goalsApiSlice';
+import { toast } from 'sonner';
 
 const transferToGoalSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
@@ -43,7 +44,9 @@ const TransferToGoalDialog = ({ isOpen, toggle, goal }: DialogProps & { goal?: s
       await transferToGoal({ uid, amount, name: goal }).unwrap();
       reset();
       toggle();
+      toast.success(`$${amount} transferred to ${goal}`);
     } catch (err) {
+      toast.error('Failed to transfer');
       setError('root.serverError', {
         message: 'Some unknown error happened.',
       });

@@ -15,6 +15,7 @@ import { Goals, useDeleteGoalMutation } from '../../features/goals/goalsApiSlice
 import { useToggle } from '../../hooks/useToggle';
 import TransferToGoalDialog from '../transfer-to-goal-dialog/TransferToGoalDialog';
 import WithdrawDialog from '../withdraw-dialog/WithdrawDialog';
+import { toast } from 'sonner';
 
 type GoalMenuProps = {
   uid: string;
@@ -37,8 +38,9 @@ const GoalMenu = ({ uid, goal }: GoalMenuProps) => {
     try {
       await deleteGoal({ uid, amount: goal?.amount, name: goal?.name }).unwrap();
       toggleConfirmation();
+      toast.success(`Deleted ${goal?.name}`);
     } catch (err) {
-      // toast notification from sonner??
+      toast.error('Failed to delete goal.');
     }
   };
 

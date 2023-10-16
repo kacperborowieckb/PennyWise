@@ -19,6 +19,7 @@ import {
   useWithDrawFromGoalMutation,
 } from '../../features/goals/goalsApiSlice';
 import GoalInput from '../goal-input/GoalInput';
+import { toast } from 'sonner';
 
 const withdrawSchema = z.object({
   amount: z.coerce.number().min(0.01, 'Minimum is 0.01'),
@@ -52,9 +53,11 @@ const WithdrawDialog = ({ isOpen, toggle, goal }: DialogProps & { goal?: Goals }
         await withdrawMoney({ uid, amount, name: goal?.name }).unwrap();
         reset();
         toggle();
+        toast.success(`Withdrew $${amount} from ${goal.name}`);
       }
     } catch (err) {
       if (err instanceof Error && err.message !== 'Value Error') {
+        toast.error(`Failed to withdrew`);
         setError('root.serverError', {
           message: 'Some unknown error happened.',
         });
