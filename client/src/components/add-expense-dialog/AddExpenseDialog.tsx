@@ -38,6 +38,7 @@ const AddExpenseDialog = ({ isOpen, toggle }: DialogProps) => {
   const [addExpense, { isLoading }] = useAddExpenseMutation();
 
   const handleAddExpense = async ({ amount, category }: TAddExpenseSchema) => {
+    if (isLoading) return;
     try {
       await addExpense({ uid, amount, category }).unwrap();
       reset();
@@ -65,7 +66,7 @@ const AddExpenseDialog = ({ isOpen, toggle }: DialogProps) => {
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toggle}>Cancel</Button>
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" disabled={isLoading}>
           {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>
       </DialogActions>

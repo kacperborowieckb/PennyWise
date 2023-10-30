@@ -34,6 +34,7 @@ const AddBalanceDialog = ({ isOpen, toggle }: DialogProps) => {
   const uid = useSelector(selectCurrentUserId);
 
   const handleAddBalance = async ({ amount }: TAddBalanceSchema) => {
+    if (isLoading) return;
     try {
       await addBalance({ uid, amount }).unwrap();
       reset();
@@ -60,7 +61,7 @@ const AddBalanceDialog = ({ isOpen, toggle }: DialogProps) => {
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toggle}>Cancel</Button>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" disabled={isLoading}>
           {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>
       </DialogActions>

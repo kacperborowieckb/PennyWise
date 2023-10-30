@@ -45,6 +45,7 @@ const PlanAPaymentDialog = ({ isOpen, toggle, selectedDate }: PlanAPaymentDialog
   const [addTransaction, { isLoading }] = useAddPlannedTransactionMutation();
 
   const handlePlanATransaction = async ({ amount, category, plannedFor }: TPlanAPaymentSchema) => {
+    if (isLoading) return;
     try {
       const formattedDate = dayjs(plannedFor).format('YYYY-MM-DD');
       await addTransaction({
@@ -79,7 +80,7 @@ const PlanAPaymentDialog = ({ isOpen, toggle, selectedDate }: PlanAPaymentDialog
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toggle}>Cancel</Button>
-        <Button type="submit" variant="contained">
+        <Button type="submit" variant="contained" disabled={isLoading}>
           {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>
       </DialogActions>

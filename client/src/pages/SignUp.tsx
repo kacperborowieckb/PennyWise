@@ -54,6 +54,7 @@ const SignUp = () => {
   const clearError = () => setError(null);
 
   const onSubmit = async ({ username, password }: TSignUpSchema) => {
+    if (isLoading) return;
     try {
       await registerNewUser({ username, password }).unwrap();
       reset();
@@ -131,7 +132,7 @@ const SignUp = () => {
           error={!!errors.confirmPassword}
           helperText={errors.confirmPassword?.message?.toString()}
         />
-        <Button variant="contained" type="submit" sx={{ height: '36px' }}>
+        <Button variant="contained" type="submit" sx={{ height: '36px' }} disabled={isLoading}>
           {isLoading ? <CircularProgress color="inherit" size={24} /> : 'Sign up'}
         </Button>
         <Typography component={'p'} variant="body1">

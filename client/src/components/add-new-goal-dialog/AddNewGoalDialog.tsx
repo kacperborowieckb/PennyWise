@@ -37,6 +37,7 @@ const AddNewGoalDialog = ({ isOpen, toggle }: DialogProps) => {
   const uid = useSelector(selectCurrentUserId);
 
   const handleAddNewGoal = async ({ amount, name }: TAddNewGoalSchema) => {
+    if (isLoading) return;
     try {
       await addNewGoal({ uid, goal: amount, name }).unwrap();
       reset();
@@ -68,7 +69,7 @@ const AddNewGoalDialog = ({ isOpen, toggle }: DialogProps) => {
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toggle}>Cancel</Button>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" disabled={isLoading}>
           {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>
       </DialogActions>

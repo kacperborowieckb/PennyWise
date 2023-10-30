@@ -49,6 +49,7 @@ const SignIn = () => {
   const handlePersistChange = () => setPersist((prev: boolean) => !prev);
 
   const onSubmit = async ({ username, password }: FieldValues) => {
+    if (isLoading) return;
     try {
       const userData = await login({ username, password }).unwrap();
       dispatch(setCredentials({ ...userData }));
@@ -126,7 +127,7 @@ const SignIn = () => {
           label="Trust this device?"
         />
 
-        <Button variant="contained" type="submit" sx={{ height: '36px' }}>
+        <Button variant="contained" type="submit" sx={{ height: '36px' }} disabled={isLoading}>
           {isLoading ? <CircularProgress color="inherit" size={24} /> : 'Sign in'}
         </Button>
         <Typography component={'p'} variant="body1">

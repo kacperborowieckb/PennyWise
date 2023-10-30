@@ -44,6 +44,7 @@ const WithdrawDialog = ({ isOpen, toggle, goal }: DialogProps & { goal?: Goals }
   });
 
   const handleAddBalance = async ({ amount }: TWithdrawSchema) => {
+    if (isLoading) return;
     try {
       if (goal) {
         if (amount > goal?.amount) {
@@ -85,7 +86,7 @@ const WithdrawDialog = ({ isOpen, toggle, goal }: DialogProps & { goal?: Goals }
       </DialogContent>
       <DialogActions sx={{ m: '0 auto' }}>
         <Button onClick={toggle}>Cancel</Button>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" type="submit" disabled={isLoading}>
           {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
         </Button>
       </DialogActions>

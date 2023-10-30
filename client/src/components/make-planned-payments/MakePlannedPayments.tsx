@@ -30,6 +30,7 @@ const MakePlannedPayments = ({
   const [deletePlannedTransaction] = useDeletePlannedTransactionsMutation();
 
   const makePlannedPayments = async () => {
+    if (isLoading) return;
     const payments: Promise<void>[] = [];
     selected.forEach((id) =>
       payments.push(

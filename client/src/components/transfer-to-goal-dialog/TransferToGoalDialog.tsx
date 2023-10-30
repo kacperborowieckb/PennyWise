@@ -46,6 +46,7 @@ const TransferToGoalDialog = ({ isOpen, toggle, goal }: DialogProps & { goal?: s
   const handleFinishExplosion = () => setIsExploding(false);
 
   const handleTransferToGoal = async ({ amount, goal }: TTransferToGoalSchema) => {
+    if (isLoading) return;
     try {
       const { isFinished } = await transferToGoal({ uid, amount, name: goal }).unwrap();
       reset();
@@ -85,7 +86,7 @@ const TransferToGoalDialog = ({ isOpen, toggle, goal }: DialogProps & { goal?: s
         </DialogContent>
         <DialogActions sx={{ m: '0 auto' }}>
           <Button onClick={toggle}>Cancel</Button>
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" disabled={isLoading}>
             {isLoading ? <CircularProgress color="inherit" size={25} /> : 'Add'}
           </Button>
         </DialogActions>

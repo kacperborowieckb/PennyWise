@@ -62,6 +62,7 @@ const Nav = () => {
   };
 
   const handleLogout = async () => {
+    if (isLoading) return;
     try {
       await logout().unwrap();
       handleCloseUserMenu();
@@ -174,7 +175,7 @@ const Nav = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleLogout}>
+              <MenuItem onClick={handleLogout} disabled={isLoading}>
                 {isLoading ? (
                   <CircularProgress size={14} sx={{ margin: '0 auto' }} />
                 ) : (

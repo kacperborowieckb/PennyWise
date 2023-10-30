@@ -25,7 +25,7 @@ type GoalMenuProps = {
 const GoalMenu = ({ uid, goal }: GoalMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = !!anchorEl;
-  const [deleteGoal] = useDeleteGoalMutation();
+  const [deleteGoal, { isLoading }] = useDeleteGoalMutation();
   const [isConfirmationOpen, toggleConfirmation] = useToggle();
   const [isTransferDialogOpen, toggleTransferDialog] = useToggle();
   const [isWithdrawDialogOpen, toggleWithdrawDialog] = useToggle();
@@ -35,6 +35,7 @@ const GoalMenu = ({ uid, goal }: GoalMenuProps) => {
   const closeMenu = () => setAnchorEl(null);
 
   const handleDeleteGoal = async () => {
+    if (isLoading) return;
     try {
       await deleteGoal({ uid, amount: goal?.amount, name: goal?.name }).unwrap();
       toggleConfirmation();
@@ -82,7 +83,7 @@ const GoalMenu = ({ uid, goal }: GoalMenuProps) => {
           <Button variant="contained" onClick={toggleConfirmation}>
             No
           </Button>
-          <Button variant="outlined" onClick={handleDeleteGoal}>
+          <Button variant="outlined" onClick={handleDeleteGoal} disabled={isLoading}>
             Yes
           </Button>
         </DialogActions>
